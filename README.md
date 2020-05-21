@@ -69,7 +69,7 @@ To use this exporter you need python2.7 and its modules prometheus_client, psuti
 ## SMF, Roles, Deployment. 
  - Create user and group '**prometheus**'
  - Run **'./solaris_exporter_smf.sh'** to create '**prometheus/solaris_exporter**' service.
- - The best way to do all installation tasks on all nodes at the same is Ansible. See tasks file install_solaris_exporter.yml as an example for creating role. You have to create Role and add all declared variables to it.
+ - The best way to do all installation tasks on all nodes is Ansible. See tasks file install_solaris_exporter.yml as an example for creating role. You have to create Role and add all declared variables to it.
  
  
 ## Prometheus configuration
