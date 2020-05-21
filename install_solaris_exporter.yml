@@ -1,0 +1,266 @@
+---
+# Tasks file for install_solaris_exporter Role
+# You have to create Role and add all declared variables to it.
+- name: "sync solaris_exporter dir and create it on error"
+  block:
+    - name: "Check root login"
+      block:
+        - name: "Check root login"
+          ping:
+          register: hostping
+          ignore_errors: yes
+          no_log: True
+          failed_when: false
+    - name: "Transfer files"
+      block:
+        - name: "{{ dest_folder }} dir creation"
+          file:
+            path: "{{ dest_folder }}"
+            group: "{{ group }}"
+            owner: "{{ owner }}"
+            mode: "0755"
+            state: directory
+          vars:
+            ansible_become: yes
+        - name: "Per-file copy to {{ dest_folder }}"
+          copy:
+            src:   "{{ item }}"
+            dest:  "{{ dest_folder }}/"
+            owner: "{{ owner }}"
+            group: "{{ group }}"
+            mode: "0755"
+          ignore_errors: yes
+          with_items: "{{ source_files }}"
+          register: copy_files
+          vars:
+            ansible_become: no
+    - name: "install python27 and psutil for Solaris 10"
+      block:
+        - name: "check DNS for Solaris 10"
+          shell: "dig get.opencsw.org | grep get.opencsw.org | grep '[0-9].[0-9].[0-9].[0-9]'"
+          register: check_dns
+          ignore_errors: yes
+          no_log: True
+          failed_when: False
+          changed_when: False
+          vars:
+            ansible_become: no
+        - name: "setup DNS for internet for Solaris 10"
+          block:
+            - name: "/etc/resolv.conf setup for Solaris 10"
+              copy:
+                src: "/etc/resolv.conf"
+                dest: "/etc/resolv.conf"
+                owner: root
+                group: root
+                mode: "preserve"
+            - name: "nsswitch.conf setup (hosts) for Solaris 10"
+              lineinfile:
+                dest: /etc/nsswitch.conf
+                line: "hosts:      files dns"
+                regexp: "^hosts.*"
+            - name: "nsswitch.conf setup (ipnodes) for Solaris 10"
+              lineinfile:
+                dest: /etc/nsswitch.conf
+                line: "ipnodes:    files dns"
+                regexp: "^ipnodes.*"
+            - name: "/usr/sbin/svcadm restart /system/name-service-cache for Solaris 10"
+              shell: '/usr/sbin/svcadm restart /system/name-service-cache'
+              changed_when: "False"
+          when: 'check_dns.rc is defined and check_dns.rc == 1'
+        - name: "check that psutil installed for Solaris 10"
+          file:
+            path: /opt/csw/lib/python2.7/vendor-packages/psutil
+          ignore_errors: yes
+          register: psutil_present
+          no_log: True
+          failed_when: false
+          vars:
+            ansible_become: no
+        - name: "install psutil for Solaris 10"
+          block:
+            - name: "check pkgutil is installed for Solaris 10"
+              file:
+                path: /opt/csw/bin/pkgutil
+              ignore_errors: yes
+              register: pkgutil_present
+              no_log: True
+              failed_when: false
+              vars:
+                ansible_become: no
+            - name: "create alias for /var/sadm/install/admin/default (man -s4 admin) file in /var/tmp/pkgadmin for Solaris 10"
+              blockinfile:
+                block: |
+                  mail=
+                  instance=overwrite
+                  partial=quit
+                  runlevel=quit
+                  idepend=quit
+                  rdepend=quit
+                  space=quit
+                  setuid=nocheck
+                  conflict=quit
+                  action=nocheck
+                  basedir=default
+                dest: /var/tmp/pkgadmin
+                create: yes
+              when: 'pkgutil_present.msg is defined and "is absent, cannot continue" in pkgutil_present.msg'
+              register: create_admin_file
+              vars:
+                ansible_become: no
+            - name: "install pkgutil for Solaris 10"
+              shell: "{{ setproxy }} pkgadd -a /var/tmp/pkgadmin -d http://get.opencsw.org/now CSWpkgutil"
+              args:
+                creates: /opt/csw/bin/pkgutil
+              when: create_admin_file.failed is sameas false
+            - name: "remove temporary file /var/tmp/pkgadmin for Solaris 10"
+              file:
+                path: /var/tmp/pkgadmin
+                state: absent
+              vars:
+                ansible_become: no
+            - name: "install py_pip for Solaris 10"
+              shell: "{{ setproxy }} /opt/csw/bin/pkgutil -y -i py_pip"
+              args:
+                creates: /opt/csw/bin/pip2.7
+            - name: "install python27 for Solaris 10"
+              shell: "{{ setproxy }} /opt/csw/bin/pkgutil -y -i python27"
+              args:
+                creates: /opt/csw/bin/python2.7
+            - name: "install python27_dev for Solaris 10"
+              shell: "{{ setproxy }} /opt/csw/bin/pkgutil -y -i python27_dev"
+              args:
+                creates: /opt/csw/bin/python2.7-config
+            - name: "install gcc5core for Solaris 10"
+              shell: "{{ setproxy }} /opt/csw/bin/pkgutil -y -i gcc5core"
+              args:
+                creates: /opt/csw/lib/gcc
+            - name: "check that /root folder exists for Solaris 10"
+              file:
+                path: /root
+                state: directory
+                owner: root
+                group: root
+            - name: "Try to set NTP time to prevent SSL-key errors during install for Solaris 10"
+              shell: "/usr/sbin/ntpdate {{ ntpserver }} || true"
+              changed_when: "False"
+            - name: "create link to gcc-5.2 for psutil compile for Solaris 10"
+              file:
+                state: link
+                src: /opt/csw/bin/gcc-5.5
+                path: /opt/csw/bin/gcc-5.2
+            - name: "Install Python 2.7 module psutil for Solaris 10"
+              shell: "cd /root; HOME=/root; export HOME; USER=root; export USER; LC_ALL=C; export LC_ALL;
+                        {{ setproxy }} /opt/csw/bin/pip2.7 install psutil"
+              args:
+                creates: /opt/csw/lib/python2.7/site-packages/psutil
+          when: 'psutil_present.msg is defined and "is absent, cannot continue" in psutil_present.msg'
+        - name: "Install Python 2.7 module prometheus_client for Solaris 10"
+          shell: "cd /root; HOME=/root; export HOME; USER=root; export USER; LC_ALL=C; export LC_ALL;
+                   {{ setproxy }} /opt/csw/bin/pip2.7 install prometheus_client"
+          args:
+            creates: /opt/csw/lib/python2.7/site-packages/prometheus_client
+      when: "'Solaris10' in group_names"
+    - name: "install python27 and psutil for Solaris 11"
+      block:
+        - name: "check that psutil installed for Solaris 11"
+          file:
+            path: /usr/lib/python2.7/site-packages/psutil
+          ignore_errors: yes
+          register: psutil_present
+          no_log: True
+          failed_when: false
+          vars:
+            ansible_become: no
+        - name: "Install Python 2.7 for Solaris 11"
+          pkg5:
+            accept_licenses: yes
+            name: pkg:/library/python/pip-27,pkg:/runtime/python-27
+            state: present
+        - name: "check DNS for Solaris 11"
+          shell: "/usr/sbin/dig pypi.org | grep pypi.org | grep '[0-9].[0-9].[0-9].[0-9]'"
+          register: check_dns
+          ignore_errors: yes
+          no_log: True
+          failed_when: False
+          changed_when: False
+          vars:
+            ansible_become: no
+        - name: "Setup DNS client for Solaris 11"
+          # Solaris 11.3 and Solaris 11.4 have different svccfg syntax, thats why commands are dublicated
+          block:
+            - name: "create vars dns_search_re and dns_list_re from dns_search and dns_list"
+              set_fact:
+                dns_search_re: "{{ dns_search | regex_replace(' ', '\\\ ') }}"
+                dns_list_re: "{{ dns_list | regex_replace(' ', '\\\ ') }}"
+            - name: "setprop DNS search"
+              shell: '/usr/sbin/svccfg -s svc:/network/dns/client:default setprop  config/search=\"{{ dns_search_re }}\" ||
+                 /usr/sbin/svccfg -s svc:/network/dns/client:default setprop  config/search=\({{ dns_search_re }}\)'
+            - name: "setprop DNS nameserver IPs"
+              shell: '/usr/sbin/svccfg -s svc:/network/dns/client:default setprop config/nameserver = net_address: \"{{ dns_list_re }}\" ||
+                     /usr/sbin/svccfg -s svc:/network/dns/client:default setprop config/nameserver = net_address: \({{ dns_list }}\)'
+            - name: "refresh dns/client"
+              shell: '/usr/sbin/svcadm refresh svc:/network/dns/client:default;
+                      /usr/sbin/svcadm restart svc:/network/dns/client:default;
+                      /usr/sbin/svcadm enable dns/client'
+            - name: "setprop name-service/switch"
+              shell: '/usr/sbin/svccfg -s svc:/system/name-service/switch:default setprop config/host = astring: \"files\ dns\" ||
+                      /usr/sbin/svccfg -s svc:/system/name-service/switch:default setprop config/host = astring: \(files\ dns\)'
+              register: SetupDNS
+            - name: "refresh name-service/switch, name-service/cache"
+              shell: '/usr/sbin/svcadm refresh svc:/system/name-service/switch:default;
+                      /usr/sbin/svcadm restart svc:/system/name-service/cache:default;'
+              register: SetupDNS
+          when:
+            - 'check_dns.rc is defined'
+            - 'check_dns.rc == 1'
+        - name: "install Prometheus client library for Solaris 11"
+          shell: "cd /root; HOME=/root; export HOME; USER=root; export USER; LC_ALL=C; export LC_ALL;
+                  {{ setproxy }} /usr/bin/pip-2.7 install prometheus_client"
+          args:
+            creates: /usr/lib/python2.7/site-packages/prometheus_client
+
+        - name: "install psutil"
+          block:
+            - name: "Install GCC for Solaris 11"
+              pkg5:
+                accept_licenses: yes
+                name: pkg:/developer/gcc/gcc-c-5
+                state: present
+            - name: "create link cc to gcc for Solaris 11"
+              file:
+                state: link
+                src: /usr/bin/gcc
+                path: /usr/bin/cc
+            - name: "install psutil with pip-2.7 for Solaris 11"
+              shell: "cd /root; HOME=/root; export HOME; USER=root; export USER; LC_ALL=C; export LC_ALL;
+                      {{ setproxy }} CFLAGS=-m32; export CFLAGS; /usr/bin/pip-2.7 install psutil"
+              args:
+                creates: /usr/lib/python2.7/vendor-packages/psutil
+          when: 'psutil_present.msg is defined and "is absent, cannot continue" in psutil_present.msg'
+      when: "'Solaris11' in group_names"
+    - name: "Install Prometheus SMF"
+      shell: "{{ dest_folder }}/solaris_exporter_smf.sh install"
+      args:
+        creates: /var/svc/log/prometheus-solaris_exporter:default.log
+    - name: "restart service solaris_exporter if files changed"
+      service:
+        name: "svc:/prometheus/solaris_exporter"
+        enabled: "yes"
+        state: "restarted"
+      when:
+        - "copy_files.changed is defined"
+        - "copy_files.changed == true"
+    - name: "Check that solaris_exporter is running"
+      service:
+        name: "svc:/prometheus/solaris_exporter"
+        enabled: "yes"
+        state: "started"
+    - name: "Test that exporter works on port 9100"
+      wait_for:
+        port: 9100
+        state: "started"
+        timeout: "5"
+      changed_when: false
+  when: "[ 'Solaris10', 'Solaris11' ] | intersect(group_names) | count > 0"
+

@@ -1,0 +1,156 @@
+---
+groups:
+
+  - name: 'Exporter alerts'
+    rules:
+      - alert: 'Solaris_exporter_service'
+        # up{job="solaris_exporter" == 0
+        expr: avg_over_time(up{job="solaris_exporter",noAlarmOn!~"(.*,|^)node(,.*|$)"}[2m]) < 0.9
+        for: 1m
+        labels:
+          severity: 'critical'
+        annotations:
+          title: "Exporter seems down"
+          description: 'Exporter does not return any metrics!'
+
+  - name: 'solaris OS alerts'
+    rules:
+      - alert: 'CPU Load solaris'
+        expr: solaris_exporter_cpu_load{job="solaris_exporter", statistic="load15m", noAlarmOn!~"(.*,|^)cpu(,.*|$)" } / ignoring (statistic) group_left(vcpu) (solaris_exporter_cpu_load{job="solaris_exporter", statistic="vcpu"} ) > 1.5
+        for: 30m
+        labels:
+          severity: 'critical'
+        annotations:
+          title: "Avg load15m > 1.5*cpu"
+          description: 'Avg load15m is more than cpu count in {{ $value | printf "%2.3f" }} times for {{ $labels.ip }} ({{ $labels.host }})'
+
+      - alert: 'CPU Load solaris'
+        expr: solaris_exporter_cpu_load{job="solaris_exporter", statistic="load15m", noAlarmOn!~"(.*,|^)cpu(,.*|$)" } / ignoring (statistic) group_left(vcpu) (solaris_exporter_cpu_load{job="solaris_exporter", statistic="vcpu"} ) > 1.2
+        for: 30m
+        labels:
+          severity: 'warning'
+        annotations:
+          title: "Avg load15m > 1.2*cpu"
+          description: 'Avg load15m is more than cpu count in {{ $value | printf "%2.3f" }} times for {{ $labels.ip }} ({{ $labels.host }})'
+
+
+      - alert: 'DiskSpaceUsage'
+        expr: solaris_exporter_diskspace_usage_bytes{job="solaris_exporter", statistic="free",fstype="zfs", noAlarmOn!~"(.*,|^)space(,.*|$)" } /
+          ignoring (statistic) solaris_exporter_diskspace_usage_bytes{job="solaris_exporter", statistic="total", fstype="zfs"} *100
+          < 10
+        for: 1m
+        labels:
+          severity: 'critical'
+        annotations:
+          title: 'Disk Space Usage'
+          description: 'On {{ $labels.ip }} fs on {{ $labels.mountpoint }} has free space of {{ $value | humanize }}%'
+
+      - alert: 'DiskSpaceUsage'
+        expr: solaris_exporter_diskspace_usage_bytes{job="solaris_exporter", statistic="free", fstype="zfs", noAlarmOn!~"(.*,|^)space(,.*|$)" }  /
+          ignoring (statistic) solaris_exporter_diskspace_usage_bytes{job="solaris_exporter", statistic="total", fstype="zfs"} *100
+          < 15
+        for: 1m
+        labels:
+          severity: 'warning'
+        annotations:
+          title: 'Disk Space Usage'
+          description: 'On {{ $labels.ip }} fs on {{ $labels.mountpoint }} has free space of {{ $value | humanize }}%'
+
+      - alert: 'DiskSpaceUsage'
+        expr: predict_linear(solaris_exporter_diskspace_usage_bytes{statistic="free",fstype="zfs", noAlarmOn!~"(.*,|^)space(,.*|$)" }[2h], 4*3600) < 0
+        for: 5m
+        labels:
+          severity: 'predict'
+        annotations:
+          title: 'Disk Space Usage predict fill in 4 hours'
+          description: "On {{ $labels.ip }} fs on {{ $labels.mountpoint }} will predict out of space in 4 hours. Check 'Low free space' alarm."
+
+      - alert: 'svcs-x'
+        expr: solaris_exporter_svcs_x_failed_services > 0
+        for: 3m
+        labels:
+          severity: 'warning'
+        annotations:
+          title: 'Found failed system services'
+          description: "Found {{ $value | humanize }} services with problems. Run 'svcs -x' command to check on {{ $labels.ip }}"
+
+      - alert: 'fmadm-faulty'
+        expr: solaris_exporter_fmadm_faults > 0
+        for: 3m
+        labels:
+          severity: 'warning'
+        annotations:
+          title: 'Found system failures'
+          description: "Found {{ $value | humanize }} faults in fmadm. Run 'fmadm faulty' command to check on {{ $labels.ip }}"
+
+
+      - alert: 'zpool-status'
+        expr: solaris_exporter_zpool_faults > 0
+        for: 3m
+        labels:
+          severity: 'warning'
+        annotations:
+          title: 'Found zpool failures'
+          description: "Found {{ $value | humanize }} faults in zpools. Run 'zpool status' command to check on {{ $labels.ip }}"
+
+
+      - alert: 'iostat-errors'
+        expr: rate(solaris_exporter_disk_errors_total[3m]) > 0
+        for: 30s
+        labels:
+          severity: 'warning'
+        annotations:
+          title: 'Found new IO failures in iostat'
+          description: "Found {{ $value | humanize }} new faults/second. Run 'iostat -En' command to check on {{ $labels.ip }}. Problem device is {{ $labels.admin_name }} ({{ $labels.admin_desc }})"
+
+      - alert: 'iostat-%b'
+        expr: rate(solaris_exporter_diskio_usage_total{statistic="rtime"}[10m]) * 100 > 90
+        for: 60m
+        labels:
+          severity: 'warning'
+        annotations:
+          title: 'Found heavy IO on disk for continuous time'
+          description: "Found disk with {{ $value | humanize }}% busy for more that 1 hour. Problem device is {{ $labels.admin_name }} ({{ $labels.admin_desc }})"
+
+
+      - alert: 'iostat-servicetime'
+        expr: 1000 * sum by (name, admin_name, ip, instance, admin_desc, driver) (rate(solaris_exporter_diskio_usage_total{statistic="rlentime"}[10m]))
+          / ignoring (statistic,stat_desc)
+          sum by (name, admin_name, ip, instance, admin_desc, driver) (rate(solaris_exporter_diskio_usage_total{statistic=~"reads|writes"}[10m])>1) > 400
+        for: 30m
+        labels:
+          severity: 'warning'
+        annotations:
+          title: 'Found IO with heavy ServiceTime for continuous time (>400ms)'
+          description: "Found servicetime {{ $value | humanize }}ms for more that 1 hour. Problem device is {{ $labels.name }}: {{ $labels.admin_name }} ({{ $labels.admin_desc }})"
+
+
+      - alert: 'fc_paths'
+        expr: solaris_exporter_fc_paths{stat='active'} != ignoring(stat) solaris_exporter_fc_paths{stat='total'}
+        for: 1m
+        labels:
+          severity: 'warning'
+        annotations:
+          title: 'Found multipath disk with degraded paths'
+          description: "Disk {{ $labels.device }} has {{ $value | humanize }} path(s)"
+
+
+      - alert: 'Localtime'
+        expr: abs(solaris_exporter_current_time_seconds_total{job="solaris_exporter"}
+          - timestamp(solaris_exporter_current_time_seconds_total{job="solaris_exporter"})  ) > 10
+        #- scrape_duration_seconds{job="solaris_exporter"}) > 3
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          title: "Time is wrong"
+          description: "Localtime of {{ $labels.instance }} differs from Prometheus time for more than 10 second (value {{ $value | humanize }}sec). Check Time Sync."
+
+      - alert: Uptime
+        expr: solaris_exporter_uptime_seconds_total{job="solaris_exporter"} < 3600
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          title: "System rebooted"
+          description: "Host {{ $labels.instance }} uptime is less than 1 hour. \n  VALUE = {{ $value | humanizeDuration }} seconds"
