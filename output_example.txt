@@ -1,0 +1,599 @@
+# HELP solaris_exporter_fc_paths_errors_total Number of times when collector ran with errors
+# TYPE solaris_exporter_fc_paths_errors_total counter
+solaris_exporter_fc_paths_errors_total 0.0
+# TYPE solaris_exporter_fc_paths_errors_created gauge
+solaris_exporter_fc_paths_errors_created 1.586252434625381e+09
+# HELP solaris_exporter_fc_paths_processing Time spent processing request
+# TYPE solaris_exporter_fc_paths_processing gauge
+solaris_exporter_fc_paths_processing 0.1153419017791748
+# HELP solaris_exporter_diskio_usage_processing Time spent processing request
+# TYPE solaris_exporter_diskio_usage_processing gauge
+solaris_exporter_diskio_usage_processing 0.2174839973449707
+# HELP solaris_exporter_network_usage_processing Time spent processing request
+# TYPE solaris_exporter_network_usage_processing gauge
+solaris_exporter_network_usage_processing 0.013155937194824219
+# HELP solaris_exporter_svcs_x_timeouts_total timeouts
+# TYPE solaris_exporter_svcs_x_timeouts_total counter
+solaris_exporter_svcs_x_timeouts_total 0.0
+# TYPE solaris_exporter_svcs_x_timeouts_created gauge
+solaris_exporter_svcs_x_timeouts_created 1.586252434625458e+09
+# HELP solaris_exporter_network_usage_timeouts_total Number of times when collector ran more than 4 seconds
+# TYPE solaris_exporter_network_usage_timeouts_total counter
+solaris_exporter_network_usage_timeouts_total 0.0
+# TYPE solaris_exporter_network_usage_timeouts_created gauge
+solaris_exporter_network_usage_timeouts_created 1.586252434624446e+09
+# HELP solaris_exporter_svcs_x_errors_total Number of times when collector ran with errors
+# TYPE solaris_exporter_svcs_x_errors_total counter
+solaris_exporter_svcs_x_errors_total 0.0
+# TYPE solaris_exporter_svcs_x_errors_created gauge
+solaris_exporter_svcs_x_errors_created 1.586252434625686e+09
+# HELP solaris_exporter_svcs_x_processing Time spent processing request
+# TYPE solaris_exporter_svcs_x_processing gauge
+solaris_exporter_svcs_x_processing 0.21514582633972168
+# HELP solaris_exporter_fmadm_timeouts_total timeouts
+# TYPE solaris_exporter_fmadm_timeouts_total counter
+solaris_exporter_fmadm_timeouts_total 0.0
+# TYPE solaris_exporter_fmadm_timeouts_created gauge
+solaris_exporter_fmadm_timeouts_created 1.586252434625764e+09
+# HELP solaris_exporter_fmadm_errors_total Number of times when collector ran with errors
+# TYPE solaris_exporter_fmadm_errors_total counter
+solaris_exporter_fmadm_errors_total 0.0
+# TYPE solaris_exporter_fmadm_errors_created gauge
+solaris_exporter_fmadm_errors_created 1.586252434625791e+09
+# HELP solaris_exporter_MemCollector_processing Time spent processing request
+# TYPE solaris_exporter_MemCollector_processing gauge
+solaris_exporter_MemCollector_processing 0.0314939022064209
+# HELP solaris_exporter_fmadm_processing Time spent processing request
+# TYPE solaris_exporter_fmadm_processing gauge
+solaris_exporter_fmadm_processing 0.11636614799499512
+# HELP solaris_exporter_zpool_timeouts_total timeouts
+# TYPE solaris_exporter_zpool_timeouts_total counter
+solaris_exporter_zpool_timeouts_total 0.0
+# TYPE solaris_exporter_zpool_timeouts_created gauge
+solaris_exporter_zpool_timeouts_created 1.586252434625865e+09
+# HELP solaris_exporter_zpool_errors_total Number of times when collector ran with errors
+# TYPE solaris_exporter_zpool_errors_total counter
+solaris_exporter_zpool_errors_total 0.0
+# TYPE solaris_exporter_zpool_errors_created gauge
+solaris_exporter_zpool_errors_created 1.586252434625892e+09
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="2",minor="7",patchlevel="14",version="2.7.14"} 1.0
+# HELP solaris_exporter_zpool_processing Time spent processing request
+# TYPE solaris_exporter_zpool_processing gauge
+solaris_exporter_zpool_processing 0.1166849136352539
+# HELP solaris_exporter_diskio_usage_timeouts_total Number of times when collector ran more than 4 seconds
+# TYPE solaris_exporter_diskio_usage_timeouts_total counter
+solaris_exporter_diskio_usage_timeouts_total 0.0
+# TYPE solaris_exporter_diskio_usage_timeouts_created gauge
+solaris_exporter_diskio_usage_timeouts_created 1.586252434624606e+09
+# HELP solaris_exporter_cpu_time_total python psutil counters, CPU usage time.
+# TYPE solaris_exporter_cpu_time_total counter
+solaris_exporter_cpu_time_total{host="sparc1.local",statistic="user"} 8.321365424e+09
+solaris_exporter_cpu_time_total{host="sparc1.local",statistic="system"} 1.4103066824e+010
+solaris_exporter_cpu_time_total{host="sparc1.local",statistic="idle"} 5.53386188288e+011
+solaris_exporter_cpu_time_total{host="sparc1.local",statistic="oiwait"} 0.0
+# HELP solaris_exporter_diskio_usage_errors_total Number of times when collector ran with errors
+# TYPE solaris_exporter_diskio_usage_errors_total counter
+solaris_exporter_diskio_usage_errors_total 0.0
+# TYPE solaris_exporter_diskio_usage_errors_created gauge
+solaris_exporter_diskio_usage_errors_created 1.58625243462464e+09
+# HELP solaris_exporter_diskio_usage_total kstat counters
+# TYPE solaris_exporter_diskio_usage_total counter
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Ed0",driver="ssd",host="sparc1.local",name="ssd2",stat_desc="number of bytes read",statistic="nread"} 148742.0
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Ed0",driver="ssd",host="sparc1.local",name="ssd2",stat_desc="number of bytes written",statistic="nwritten"} 0.0
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Ed0",driver="ssd",host="sparc1.local",name="ssd2",stat_desc="number of read operations",statistic="reads"} 65.0
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Ed0",driver="ssd",host="sparc1.local",name="ssd2",stat_desc="cumulative run length time product",statistic="rlentime"} 0.000249765
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Ed0",driver="ssd",host="sparc1.local",name="ssd2",stat_desc="cumulative run service time",statistic="rtime"} 0.000249765
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Ed0",driver="ssd",host="sparc1.local",name="ssd2",stat_desc="cumulative wait length time product",statistic="wlentime"} 1.68e-06
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Ed0",driver="ssd",host="sparc1.local",name="ssd2",stat_desc="number of write operations",statistic="writes"} 18.0
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Ed0",driver="ssd",host="sparc1.local",name="ssd2",stat_desc="cumulative wait pre-service time",statistic="wtime"} 1.68e-06
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Dd0",driver="ssd",host="sparc1.local",name="ssd3",stat_desc="number of bytes read",statistic="nread"} 7.131952295582e+012
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Dd0",driver="ssd",host="sparc1.local",name="ssd3",stat_desc="number of bytes written",statistic="nwritten"} 2.92402606365696e+014
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Dd0",driver="ssd",host="sparc1.local",name="ssd3",stat_desc="number of read operations",statistic="reads"} 2.79567072e+08
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Dd0",driver="ssd",host="sparc1.local",name="ssd3",stat_desc="cumulative run length time product",statistic="rlentime"} 8.70387558846759e+06
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Dd0",driver="ssd",host="sparc1.local",name="ssd3",stat_desc="cumulative run service time",statistic="rtime"} 1.38015368899582e+06
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Dd0",driver="ssd",host="sparc1.local",name="ssd3",stat_desc="cumulative wait length time product",statistic="wlentime"} 14308.075890495
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Dd0",driver="ssd",host="sparc1.local",name="ssd3",stat_desc="number of write operations",statistic="writes"} 8.22404387e+08
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Dd0",driver="ssd",host="sparc1.local",name="ssd3",stat_desc="cumulative wait pre-service time",statistic="wtime"} 13984.52539236
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t60080180000011111111111100000030d0",driver="ssd",host="sparc1.local",name="ssd4",stat_desc="number of bytes read",statistic="nread"} 9.1876358e+07
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t60080180000011111111111100000030d0",driver="ssd",host="sparc1.local",name="ssd4",stat_desc="number of bytes written",statistic="nwritten"} 3.6686336e+07
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t60080180000011111111111100000030d0",driver="ssd",host="sparc1.local",name="ssd4",stat_desc="number of read operations",statistic="reads"} 57420.0
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t60080180000011111111111100000030d0",driver="ssd",host="sparc1.local",name="ssd4",stat_desc="cumulative run length time product",statistic="rlentime"} 269.199985665
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t60080180000011111111111100000030d0",driver="ssd",host="sparc1.local",name="ssd4",stat_desc="cumulative run service time",statistic="rtime"} 59.014402605
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t60080180000011111111111100000030d0",driver="ssd",host="sparc1.local",name="ssd4",stat_desc="cumulative wait length time product",statistic="wlentime"} 0.117867315
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t60080180000011111111111100000030d0",driver="ssd",host="sparc1.local",name="ssd4",stat_desc="number of write operations",statistic="writes"} 3537.0
+solaris_exporter_diskio_usage_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t60080180000011111111111100000030d0",driver="ssd",host="sparc1.local",name="ssd4",stat_desc="cumulative wait pre-service time",statistic="wtime"} 0.116177955
+# HELP solaris_exporter_zpool_faults faults in zpool status
+# TYPE solaris_exporter_zpool_faults gauge
+solaris_exporter_zpool_faults{host="sparc1.local"} 0.0
+# HELP solaris_exporter_disk_error_collector_timeouts_total Number of times when collector ran more than 4 seconds
+# TYPE solaris_exporter_disk_error_collector_timeouts_total counter
+solaris_exporter_disk_error_collector_timeouts_total 0.0
+# TYPE solaris_exporter_disk_error_collector_timeouts_created gauge
+solaris_exporter_disk_error_collector_timeouts_created 1.586252434624727e+09
+# HELP solaris_exporter_diskspace_worker Time spent processing request
+# TYPE solaris_exporter_diskspace_worker gauge
+solaris_exporter_diskspace_worker 0.006745100021362305
+# HELP solaris_exporter_disk_error_collector_errors_total Number of times when collector ran with errors
+# TYPE solaris_exporter_disk_error_collector_errors_total counter
+solaris_exporter_disk_error_collector_errors_total 0.0
+# TYPE solaris_exporter_disk_error_collector_errors_created gauge
+solaris_exporter_disk_error_collector_errors_created 1.586252434624757e+09
+# HELP solaris_exporter_disk_errors_collector_processing Time spent processing request
+# TYPE solaris_exporter_disk_errors_collector_processing gauge
+solaris_exporter_disk_errors_collector_processing 0.21588897705078125
+# HELP solaris_exporter_disk_errors_total kstat counters
+# TYPE solaris_exporter_disk_errors_total counter
+solaris_exporter_disk_errors_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Ed0",driver="ssd",host="sparc1.local",name="ssd2",statistic="Hard_Errors"} 0.0
+solaris_exporter_disk_errors_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Ed0",driver="ssd",host="sparc1.local",name="ssd2",statistic="Soft_Errors"} 0.0
+solaris_exporter_disk_errors_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Ed0",driver="ssd",host="sparc1.local",name="ssd2",statistic="Transport_Errors"} 0.0
+solaris_exporter_disk_errors_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Dd0",driver="ssd",host="sparc1.local",name="ssd3",statistic="Hard_Errors"} 0.0
+solaris_exporter_disk_errors_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Dd0",driver="ssd",host="sparc1.local",name="ssd3",statistic="Soft_Errors"} 0.0
+solaris_exporter_disk_errors_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t6008018000001111111111110000000Dd0",driver="ssd",host="sparc1.local",name="ssd3",statistic="Transport_Errors"} 0.0
+solaris_exporter_disk_errors_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t60080180000011111111111100000030d0",driver="ssd",host="sparc1.local",name="ssd4",statistic="Hard_Errors"} 0.0
+solaris_exporter_disk_errors_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t60080180000011111111111100000030d0",driver="ssd",host="sparc1.local",name="ssd4",statistic="Soft_Errors"} 0.0
+solaris_exporter_disk_errors_total{admin_desc="HITACHI OPEN-V -SUN",admin_name="c0t60080180000011111111111100000030d0",driver="ssd",host="sparc1.local",name="ssd4",statistic="Transport_Errors"} 0.0
+# HELP solaris_exporter_cpu_load_processing Time spent processing request
+# TYPE solaris_exporter_cpu_load_processing gauge
+solaris_exporter_cpu_load_processing 0.014181852340698242
+# HELP solaris_exporter_diskspace_usage_bytes python psutil counters, diskspace usage in bytes.
+# TYPE solaris_exporter_diskspace_usage_bytes gauge
+solaris_exporter_diskspace_usage_bytes{device="myrpool/ROOT/mybootenv-3",fstype="zfs",host="sparc1.local",mountpoint="/",statistic="used"} 7.731986944e+09
+solaris_exporter_diskspace_usage_bytes{device="myrpool/ROOT/mybootenv-3",fstype="zfs",host="sparc1.local",mountpoint="/",statistic="total"} 1.99243891712e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/ROOT/mybootenv-3",fstype="zfs",host="sparc1.local",mountpoint="/",statistic="free"} 1.91511904768e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/ROOT/mybootenv-3",fstype="zfs",host="sparc1.local",mountpoint="/",statistic="percent"} 3.9
+solaris_exporter_diskspace_usage_bytes{device="myrpool/ROOT/mybootenv-3/var",fstype="zfs",host="sparc1.local",mountpoint="/var",statistic="used"} 1.395372032e+09
+solaris_exporter_diskspace_usage_bytes{device="myrpool/ROOT/mybootenv-3/var",fstype="zfs",host="sparc1.local",mountpoint="/var",statistic="total"} 1.929072768e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/ROOT/mybootenv-3/var",fstype="zfs",host="sparc1.local",mountpoint="/var",statistic="free"} 1.91511904768e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/ROOT/mybootenv-3/var",fstype="zfs",host="sparc1.local",mountpoint="/var",statistic="percent"} 0.7
+solaris_exporter_diskspace_usage_bytes{device="myrpool/ROOT/mybootenv-3/opt",fstype="zfs",host="sparc1.local",mountpoint="/opt",statistic="used"} 3.2061952e+07
+solaris_exporter_diskspace_usage_bytes{device="myrpool/ROOT/mybootenv-3/opt",fstype="zfs",host="sparc1.local",mountpoint="/opt",statistic="total"} 1.9154396672e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/ROOT/mybootenv-3/opt",fstype="zfs",host="sparc1.local",mountpoint="/opt",statistic="free"} 1.91511904768e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/ROOT/mybootenv-3/opt",fstype="zfs",host="sparc1.local",mountpoint="/opt",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool",fstype="zfs",host="sparc1.local",mountpoint="/myrpool",statistic="used"} 57856.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool",fstype="zfs",host="sparc1.local",mountpoint="/myrpool",statistic="total"} 1.91511962624e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool",fstype="zfs",host="sparc1.local",mountpoint="/myrpool",statistic="free"} 1.91511904768e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool",fstype="zfs",host="sparc1.local",mountpoint="/myrpool",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export",fstype="zfs",host="sparc1.local",mountpoint="/export",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export",fstype="zfs",host="sparc1.local",mountpoint="/export",statistic="total"} 1.91511937536e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export",fstype="zfs",host="sparc1.local",mountpoint="/export",statistic="free"} 1.91511904768e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export",fstype="zfs",host="sparc1.local",mountpoint="/export",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home",fstype="zfs",host="sparc1.local",mountpoint="/export/home",statistic="used"} 35840.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home",fstype="zfs",host="sparc1.local",mountpoint="/export/home",statistic="total"} 1.91511940608e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home",fstype="zfs",host="sparc1.local",mountpoint="/export/home",statistic="free"} 1.91511904768e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home",fstype="zfs",host="sparc1.local",mountpoint="/export/home",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home/user1",fstype="zfs",host="sparc1.local",mountpoint="/export/home/user1",statistic="used"} 6.2858368e+09
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home/user1",fstype="zfs",host="sparc1.local",mountpoint="/export/home/user1",statistic="total"} 1.97797741568e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home/user1",fstype="zfs",host="sparc1.local",mountpoint="/export/home/user1",statistic="free"} 1.91511904768e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home/user1",fstype="zfs",host="sparc1.local",mountpoint="/export/home/user1",statistic="percent"} 3.2
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home/user2",fstype="zfs",host="sparc1.local",mountpoint="/export/home/user2",statistic="used"} 36352.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home/user2",fstype="zfs",host="sparc1.local",mountpoint="/export/home/user2",statistic="total"} 1.9151194112e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home/user2",fstype="zfs",host="sparc1.local",mountpoint="/export/home/user2",statistic="free"} 1.91511904768e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home/user2",fstype="zfs",host="sparc1.local",mountpoint="/export/home/user2",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home/user3",fstype="zfs",host="sparc1.local",mountpoint="/export/home/user3",statistic="used"} 43520.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home/user3",fstype="zfs",host="sparc1.local",mountpoint="/export/home/user3",statistic="total"} 1.91511948288e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home/user3",fstype="zfs",host="sparc1.local",mountpoint="/export/home/user3",statistic="free"} 1.91511904768e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/export/home/user3",fstype="zfs",host="sparc1.local",mountpoint="/export/home/user3",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="swap2",fstype="zfs",host="sparc1.local",mountpoint="/swap2",statistic="used"} 31744.0
+solaris_exporter_diskspace_usage_bytes{device="swap2",fstype="zfs",host="sparc1.local",mountpoint="/swap2",statistic="total"} 4.4201150976e+010
+solaris_exporter_diskspace_usage_bytes{device="swap2",fstype="zfs",host="sparc1.local",mountpoint="/swap2",statistic="free"} 4.4201119232e+010
+solaris_exporter_diskspace_usage_bytes{device="swap2",fstype="zfs",host="sparc1.local",mountpoint="/swap2",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones",fstype="zfs",host="sparc1.local",mountpoint="/zones",statistic="used"} 66560.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones",fstype="zfs",host="sparc1.local",mountpoint="/zones",statistic="total"} 1.91511971328e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones",fstype="zfs",host="sparc1.local",mountpoint="/zones",statistic="free"} 1.91511904768e+011
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones",fstype="zfs",host="sparc1.local",mountpoint="/zones",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone10",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone10",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone10",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone10",statistic="total"} 7.820032e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone10",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone10",statistic="free"} 7.8200287232e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone10",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone10",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone11",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone11",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone11",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone11",statistic="total"} 9.919662592e+09
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone11",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone11",statistic="free"} 9.919629824e+09
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone11",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone11",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone12",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone12",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone12",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone12",statistic="total"} 1.0518972416e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone12",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone12",statistic="free"} 1.0518939648e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone12",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone12",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone13",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone13",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone13",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone13",statistic="total"} 7.123792896e+09
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone13",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone13",statistic="free"} 7.123760128e+09
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone13",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone13",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone14",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone14",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone14",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone14",statistic="total"} 8.572688384e+09
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone14",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone14",statistic="free"} 8.572655616e+09
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone14",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone14",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/sparc1zone17",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone17",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/sparc1zone17",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone17",statistic="total"} 3.7532007936e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/sparc1zone17",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone17",statistic="free"} 3.7531975168e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/sparc1zone17",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone17",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone19",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone19",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone19",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone19",statistic="total"} 2.8773378048e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone19",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone19",statistic="free"} 2.877334528e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone19",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone19",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone2",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone2",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone2",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone2",statistic="total"} 4.6144123904e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone2",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone2",statistic="free"} 4.6144091136e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone2",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone2",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone20",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone20",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone20",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone20",statistic="total"} 2.1333461504e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone20",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone20",statistic="free"} 2.1333428736e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone20",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone20",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone21",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone21",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone21",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone21",statistic="total"} 1.797465088e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone21",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone21",statistic="free"} 1.7974618112e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone21",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone21",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone23",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone23",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone23",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone23",statistic="total"} 1.5109191168e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone23",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone23",statistic="free"} 1.51091584e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone23",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone23",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone27",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone27",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone27",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone27",statistic="total"} 1.5811145216e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone27",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone27",statistic="free"} 1.5811112448e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone27",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone27",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone28",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone28",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone28",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone28",statistic="total"} 2.5953838592e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone28",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone28",statistic="free"} 2.5953805824e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone28",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone28",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone3",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone3",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone3",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone3",statistic="total"} 4.2302289408e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone3",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone3",statistic="free"} 4.230225664e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone3",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone3",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone7",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone7",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone7",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone7",statistic="total"} 4.0648305664e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone7",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone7",statistic="free"} 4.0648272896e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone7",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone7",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone9",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone9",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone9",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone9",statistic="total"} 4.4716695552e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone9",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone9",statistic="free"} 4.4716662784e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone9",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone9",statistic="percent"} 0.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone1",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone1",statistic="used"} 32768.0
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone1",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone1",statistic="total"} 2.0234614272e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone1",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone1",statistic="free"} 2.0234581504e+010
+solaris_exporter_diskspace_usage_bytes{device="myrpool/zones/sparc1zone1",fstype="zfs",host="sparc1.local",mountpoint="/zones/sparc1zone1",statistic="percent"} 0.0
+# HELP solaris_exporter_cpu_time_processing Time spent processing request
+# TYPE solaris_exporter_cpu_time_processing gauge
+solaris_exporter_cpu_time_processing 0.012782096862792969
+# HELP solaris_exporter_current_time_seconds_total Current time of system
+# TYPE solaris_exporter_current_time_seconds_total counter
+solaris_exporter_current_time_seconds_total 1.590076433393969e+09
+# HELP solaris_exporter_fc_paths /usr/sbin/mpathadm list lu
+# TYPE solaris_exporter_fc_paths gauge
+solaris_exporter_fc_paths{device="c0t6008018000001111111111110000000Ed0",host="sparc1.local",stat="active"} 2.0
+solaris_exporter_fc_paths{device="c0t6008018000001111111111110000000Ed0",host="sparc1.local",stat="total"} 2.0
+solaris_exporter_fc_paths{device="c0t6008018000001111111111110000000Dd0",host="sparc1.local",stat="active"} 2.0
+solaris_exporter_fc_paths{device="c0t6008018000001111111111110000000Dd0",host="sparc1.local",stat="total"} 2.0
+solaris_exporter_fc_paths{device="c0t60080180000011111111111100000030d0",host="sparc1.local",stat="active"} 2.0
+solaris_exporter_fc_paths{device="c0t60080180000011111111111100000030d0",host="sparc1.local",stat="total"} 2.0
+# HELP solaris_exporter_uptime_seconds_total uptime of system
+# TYPE solaris_exporter_uptime_seconds_total counter
+solaris_exporter_uptime_seconds_total 3.998888151030207e+07
+# HELP solaris_exporter_cpu_load python psutil counters, system load avg.
+# TYPE solaris_exporter_cpu_load gauge
+solaris_exporter_cpu_load{host="sparc1.local",statistic="load1m"} 5.79296875
+solaris_exporter_cpu_load{host="sparc1.local",statistic="load5m  "} 5.73828125
+solaris_exporter_cpu_load{host="sparc1.local",statistic="load15m"} 5.72265625
+solaris_exporter_cpu_load{host="sparc1.local",statistic="vcpu"} 144.0
+# HELP solaris_exporter_svcs_x_failed_services failed services counter in svcs -x
+# TYPE solaris_exporter_svcs_x_failed_services gauge
+solaris_exporter_svcs_x_failed_services{host="sparc1.local"} 0.0
+# HELP solaris_exporter_fmadm_faults faults in fmadm faulty
+# TYPE solaris_exporter_fmadm_faults gauge
+solaris_exporter_fmadm_faults{host="sparc1.local"} 0.0
+# HELP solaris_exporter_per_zone_cpu_timeouts_total Number of times when collector ran more than 25 seconds
+# TYPE solaris_exporter_per_zone_cpu_timeouts_total counter
+solaris_exporter_per_zone_cpu_timeouts_total 0.0
+# TYPE solaris_exporter_per_zone_cpu_timeouts_created gauge
+solaris_exporter_per_zone_cpu_timeouts_created 1.586252434625079e+09
+# HELP solaris_exporter_per_zone_caps_total kstat counters about zone resources
+# TYPE solaris_exporter_per_zone_caps_total gauge
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone23"} 3.4359738368e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone23"} 1.328488448e+09
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone23"} 41.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone20"} 1.7179869184e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone20"} 1.348550656e+09
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone20"} 41.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone7"} 1.7179869184e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone7"} 5.449015296e+09
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone7"} 56.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone2"} 1.7179869184e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone2"} 9.65042176e+08
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone2"} 41.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone3"} 1.7179869184e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone3"} 1.145192448e+09
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone3"} 41.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone10"} 1.7179869184e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone10"} 2.936356864e+09
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone10"} 44.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone14"} 1.7179869184e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone14"} 1.3363216384e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone14"} 45.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone19"} 1.7179869184e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone19"} 1.080303616e+09
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone19"} 41.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone11"} 1.7179869184e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone11"} 1.136058368e+09
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone11"} 41.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone1"} 1.8446744073709552e+19
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone1"} 6.26655232e+08
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone1"} 30.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone13"} 1.7179869184e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone13"} 5.830598656e+09
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone13"} 48.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone9"} 1.7179869184e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone9"} 8.9079808e+08
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone9"} 41.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="global"} 1.8446744073709552e+19
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="global"} 2.324185088e+09
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="global"} 108.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone12"} 1.7179869184e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone12"} 1.810587648e+09
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone12"} 41.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone21"} 3.4359738368e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone21"} 8.7863296e+08
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone21"} 39.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone17"} 8.589934592e+09
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone17"} 9.7312768e+08
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone17"} 41.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone27"} 1.7179869184e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone27"} 4.818673664e+09
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone27"} 48.0
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_limit_bytes",zone="sparc1zone28"} 3.4359738368e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="swap_usage_bytes",zone="sparc1zone28"} 3.2286851072e+010
+solaris_exporter_per_zone_caps_total{host="sparc1.local",statistic="nprocs_current",zone="sparc1zone28"} 46.0
+# HELP solaris_exporter_network_usage_errors_total Number of times when collector ran with errors
+# TYPE solaris_exporter_network_usage_errors_total counter
+solaris_exporter_network_usage_errors_total 0.0
+# TYPE solaris_exporter_network_usage_errors_created gauge
+solaris_exporter_network_usage_errors_created 1.586252434624492e+09
+# HELP solaris_exporter_per_zone_cpu_processing Time spent processing request
+# TYPE solaris_exporter_per_zone_cpu_processing gauge
+solaris_exporter_per_zone_cpu_processing 2.719193935394287
+# HELP solaris_exporter_memory_usage_bytes python psutil counters, Memory usage in bytes.
+# TYPE solaris_exporter_memory_usage_bytes gauge
+solaris_exporter_memory_usage_bytes{counter="used",host="sparc1.local",type="virtual"} 1.01479743488e+011
+solaris_exporter_memory_usage_bytes{counter="available",host="sparc1.local",type="virtual"} 1.16489846784e+011
+solaris_exporter_memory_usage_bytes{counter="total",host="sparc1.local",type="virtual"} 2.17969590272e+011
+solaris_exporter_memory_usage_bytes{counter="free",host="sparc1.local",type="virtual"} 1.16489846784e+011
+solaris_exporter_memory_usage_bytes{counter="total",host="sparc1.local",type="swap"} 3.75801847808e+011
+solaris_exporter_memory_usage_bytes{counter="used",host="sparc1.local",type="swap"} 0.0
+solaris_exporter_memory_usage_bytes{counter="free",host="sparc1.local",type="swap"} 3.75801847808e+011
+solaris_exporter_memory_usage_bytes{counter="sin",host="sparc1.local",type="swap"} 0.0
+solaris_exporter_memory_usage_bytes{counter="sout",host="sparc1.local",type="swap"} 0.0
+# HELP solaris_exporter_per_zone_caps_timeouts_total Number of times when collector ran more than 25 seconds
+# TYPE solaris_exporter_per_zone_caps_timeouts_total counter
+solaris_exporter_per_zone_caps_timeouts_total 0.0
+# TYPE solaris_exporter_per_zone_caps_timeouts_created gauge
+solaris_exporter_per_zone_caps_timeouts_created 1.586252434625243e+09
+# HELP solaris_exporter_per_zone_usage_total kstat counters
+# TYPE solaris_exporter_per_zone_usage_total counter
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone23"} 1.042469e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone23"} 2.0868234021623e+013
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone23"} 8.589717491e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone23"} 717737.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone23"} 1.7625298396e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone23"} 2522.3576786358335
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone23"} 2.10421981e+08
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone23"} 2993.776104135729
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone23"} 21123.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone23"} 2.910080830705e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone23"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone20"} 1.042196e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone20"} 1.9095937910411e+013
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone20"} 8.571435517e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone20"} 717866.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone20"} 1.7485469484e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone20"} 2466.596545948854
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone20"} 1.88809714e+08
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone20"} 2967.4369862810413
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone20"} 21124.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone20"} 2.911062170019e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone20"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone7"} 1.787392e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone7"} 3.198347369606e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone7"} 8.456673025e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone7"} 656458.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone7"} 1.6706425099e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone7"} 1866.7710493988543
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone7"} 3.2020549e+07
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone7"} 2986.5480498334373
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone7"} 21166.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone7"} 3.029496585939e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone7"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone2"} 972310.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone2"} 4.189319315346e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone2"} 8.453610478e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone2"} 657827.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone2"} 1.6949087421e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone2"} 2008.832782825625
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone2"} 4.2883809e+07
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone2"} 2800.4944208547913
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone2"} 21829.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone2"} 2.909920540677e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone2"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone3"} 1.024714e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone3"} 4.356025591935e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone3"} 8.453568031e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone3"} 709318.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone3"} 1.6931329107e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone3"} 2000.0543506191668
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone3"} 4.5526447e+07
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone3"} 2793.059386656979
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone3"} 21437.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone3"} 2.909748523531e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone3"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone10"} 1.10455741e+08
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone10"} 6.53768701763946e+014
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone10"} 2.8049599751e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone10"} 1.10173925e+08
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone10"} 5.69434729815e+011
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone10"} 41935.93546278604
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone10"} 5.1110427631e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone10"} 169422.9764240239
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone10"} 3.337186e+08
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone10"} 5.923570210007e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone10"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone14"} 978193.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone14"} 7.33531360189e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone14"} 2.57898994785e+011
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone14"} 659341.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone14"} 4.96573954686e+011
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone14"} 16303.008689519165
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone14"} 2.2908510445e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone14"} 8409.977362896458
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone14"} 21184.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone14"} 5.274973151485e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone14"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone19"} 1.042088e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone19"} 7.993219468239e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone19"} 8.606542087e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone19"} 717191.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone19"} 1.7800394035e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone19"} 2247.9922025309374
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone19"} 1.38162414e+08
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone19"} 2855.9499444541666
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone19"} 21078.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone19"} 2.913100517454e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone19"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone11"} 1.029335e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone11"} 2.3092409843106e+013
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone11"} 8.494437331e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone11"} 711229.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone11"} 1.7049233835e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone11"} 2642.2430334575
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone11"} 1.79639464e+08
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone11"} 2927.64608337
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone11"} 21162.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone11"} 2.909126572095e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone11"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone1"} 84710.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone1"} 1.3248558644e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone1"} 1.116319847e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone1"} 63563.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone1"} 1.214707311e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone1"} 38.426308566354166
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone1"} 982444.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone1"} 12.759797892083334
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone1"} 1443.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone1"} 9.582054881e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone1"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone13"} 1.030652e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone13"} 1.3452804302523e+013
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone13"} 3.4754197923e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone13"} 712277.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone13"} 1.47275469549e+011
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone13"} 6953.531251441667
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone13"} 1.4768499249e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone13"} 8589.016704333646
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone13"} 7.690885e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone13"} 5.639788547184e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone13"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone9"} 1.023577e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone9"} 4.297745533867e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone9"} 8.216661309e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone9"} 708242.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone9"} 1.6600250791e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone9"} 1987.1410763269791
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone9"} 3.6492183e+07
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone9"} 2979.792453720729
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone9"} 21082.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone9"} 2.910695395168e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone9"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="global"} 2.20736464e+08
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="global"} 7.828906933192e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="global"} 2.25551481443e+011
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="global"} 9.8279916e+07
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="global"} 2.81956262105e+011
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="global"} 11483.749266718334
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="global"} 3.366558385e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="global"} 377130.5171546435
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="global"} 1.762331e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="global"} 1.6000205424258e+013
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="global"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone12"} 1.030099e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone12"} 1.4723174082896e+013
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone12"} 8.341799765e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone12"} 711454.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone12"} 1.7275758878e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone12"} 2298.465569510625
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone12"} 1.60913588e+08
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone12"} 3024.08249637
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone12"} 21098.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone12"} 2.909993924821e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone12"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone21"} 1.04279e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone21"} 2.3347472699353e+013
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone21"} 8.206489474e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone21"} 717514.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone21"} 1.1174222581e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone21"} 1590.3565448929166
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone21"} 1.93846002e+08
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone21"} 448.1825877648958
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone21"} 21100.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone21"} 6.5434675715e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone21"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone17"} 1.030164e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone17"} 5.942302351521e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone17"} 8.353258863e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone17"} 711438.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone17"} 1.7359239475e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone17"} 2023.9077355386457
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone17"} 1.06579573e+08
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone17"} 3280.2614673285416
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone17"} 21156.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone17"} 2.91008814178e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone17"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone27"} 2.443212e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone27"} 1.9103095813288e+013
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone27"} 1.5431964558e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone27"} 1.311724e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone27"} 4.14146170858e+011
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone27"} 25438.063583366456
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone27"} 5.74454229e+09
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone27"} 8847.234289691147
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone27"} 1.817807e+06
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone27"} 3.769157829284e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone27"} 144.0
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="forks for zone",statistic="sysfork",zone="sparc1zone28"} 4.7411578e+07
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes wrote for zone",statistic="writech",zone="sparc1zone28"} 2.84834398149639e+014
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="read count for zone",statistic="sysread",zone="sparc1zone28"} 3.6641207976e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="execs for zone",statistic="sysexec",zone="sparc1zone28"} 4.7154643e+07
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="system calls for zone",statistic="syscall",zone="sparc1zone28"} 3.6007726856e+011
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter user time for zone, seconds",statistic="user",zone="sparc1zone28"} 25897.492737700104
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="write count for zone",statistic="syswrite",zone="sparc1zone28"} 3.0299473364e+010
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="per CPU microstate counter kernel time for zone, seconds",statistic="kernel",zone="sparc1zone28"} 72311.76531011354
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="spawns for zone",statistic="sysspawn",zone="sparc1zone28"} 1.45608161e+08
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="bytes read for zone",statistic="readch",zone="sparc1zone28"} 8.226965662515e+012
+solaris_exporter_per_zone_usage_total{host="sparc1.local",pset="0",stat_desc="cpu number in pset",statistic="cpus",zone="sparc1zone28"} 144.0
+# HELP solaris_exporter_network_usage_total kstat counters
+# TYPE solaris_exporter_network_usage_total counter
+solaris_exporter_network_usage_total{NIC="net1",host="sparc1.local",statistic="bytes_sent"} 0.0
+solaris_exporter_network_usage_total{NIC="net1",host="sparc1.local",statistic="bytes_recv"} 0.0
+solaris_exporter_network_usage_total{NIC="net1",host="sparc1.local",statistic="errin"} 0.0
+solaris_exporter_network_usage_total{NIC="net1",host="sparc1.local",statistic="errout"} 0.0
+solaris_exporter_network_usage_total{NIC="net1",host="sparc1.local",statistic="dropin"} 0.0
+solaris_exporter_network_usage_total{NIC="net1",host="sparc1.local",statistic="dropout"} 0.0
+solaris_exporter_network_usage_total{NIC="net0",host="sparc1.local",statistic="bytes_sent"} 2.131487316405e+012
+solaris_exporter_network_usage_total{NIC="net0",host="sparc1.local",statistic="bytes_recv"} 1.921120949857e+012
+solaris_exporter_network_usage_total{NIC="net0",host="sparc1.local",statistic="errin"} 0.0
+solaris_exporter_network_usage_total{NIC="net0",host="sparc1.local",statistic="errout"} 0.0
+solaris_exporter_network_usage_total{NIC="net0",host="sparc1.local",statistic="dropin"} 0.0
+solaris_exporter_network_usage_total{NIC="net0",host="sparc1.local",statistic="dropout"} 0.0
+# HELP solaris_exporter_per_zone_caps_errors_total Number of times when collector ran with errors
+# TYPE solaris_exporter_per_zone_caps_errors_total counter
+solaris_exporter_per_zone_caps_errors_total 0.0
+# TYPE solaris_exporter_per_zone_caps_errors_created gauge
+solaris_exporter_per_zone_caps_errors_created 1.586252434625274e+09
+# HELP solaris_exporter_per_zone_cpu_errors_total Number of times when collector ran with errors
+# TYPE solaris_exporter_per_zone_cpu_errors_total counter
+solaris_exporter_per_zone_cpu_errors_total 0.0
+# TYPE solaris_exporter_per_zone_cpu_errors_created gauge
+solaris_exporter_per_zone_cpu_errors_created 1.586252434625111e+09
+# HELP solaris_exporter_per_zone_caps_processing Time spent processing request
+# TYPE solaris_exporter_per_zone_caps_processing gauge
+solaris_exporter_per_zone_caps_processing 0.21715593338012695
+# HELP solaris_exporter_fc_paths_timeouts_total timeouts
+# TYPE solaris_exporter_fc_paths_timeouts_total counter
+solaris_exporter_fc_paths_timeouts_total 0.0
+# TYPE solaris_exporter_fc_paths_timeouts_created gauge
+solaris_exporter_fc_paths_timeouts_created 1.586252434625353e+09
