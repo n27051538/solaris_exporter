@@ -284,11 +284,11 @@ class DiskIOCollector(object):
     def collect(self):
         with self.disk_io_collector_run_time.time():
             output, task_return_code, task_timeouted = run_shell_command('kstat -p -c disk', self.max_time_to_run)
+            disk_io_usage = CounterMetricFamily("solaris_exporter_diskio_usage", 'kstat counters',
+                                                labels=['driver', 'name', 'statistic', 'stat_desc',
+                                                        'admin_name', 'admin_desc', 'host'])
             if task_return_code == 0 and task_timeouted is False:
                 lines = output.splitlines()
-                disk_io_usage = CounterMetricFamily("solaris_exporter_diskio_usage", 'kstat counters',
-                                                    labels=['driver', 'name', 'statistic', 'stat_desc',
-                                                            'admin_name', 'admin_desc', 'host'])
                 for line in lines:
                     kstatkeyvalue = line.split("\t")
                     kstatkeyvalue[0] = re.sub('[ ,!=]', '_', kstatkeyvalue[0]).replace(",", ".")
@@ -326,7 +326,7 @@ class DiskIOCollector(object):
                 self.disk_io_collector_errors.inc()
                 if task_timeouted:
                     self.disk_io_collector_timeouts.inc()
-        yield disk_io_usage
+            yield disk_io_usage
 
 
 class DiskErrorCollector(object):
@@ -345,12 +345,11 @@ class DiskErrorCollector(object):
     def collect(self):
         with self.disk_er_collector_run_time.time():
             output, task_return_code, task_timeouted = run_shell_command('kstat -p -c device_error :::/.*Errors/', self.max_time_to_run)
+	    disk_errors = CounterMetricFamily("solaris_exporter_disk_errors", 'kstat counters',
+                                              labels=['driver', 'name', 'statistic',
+                                                      'admin_name', 'admin_desc', 'host'])
             if task_return_code == 0 and task_timeouted is False:
                 lines = output.splitlines()
-                disk_errors = CounterMetricFamily("solaris_exporter_disk_errors", 'kstat counters',
-                                                    labels=['driver', 'name', 'statistic',
-                                                            'admin_name', 'admin_desc', 'host'])
-
 
                 for line in lines:
                     kstatkeyvalue = line.split("\t")            # sderr:58:sd58,err:Transport Errors
@@ -376,7 +375,7 @@ class DiskErrorCollector(object):
                 self.disk_er_collector_errors.inc()
                 if task_timeouted:
                     self.disk_er_collector_timeouts.inc()
-        yield disk_errors
+            yield disk_errors
 
 
 class CpuLoadCollector(object):
@@ -708,18 +707,21 @@ class FCinfoCollector(object):
                 fc_lun = GaugeMetricFamily("solaris_exporter_fc_paths", '/usr/sbin/mpathadm list lu', labels=['device', 'stat', 'host'])
                 fc_total_paths = {}
                 fc_active_paths = {}
-
                 for line in lines:
                     content = line.strip()
                     if '/dev/rdsk/' in content:
                         device = re.sub(r'/dev/rdsk/(.*)s2', r'\1', content)
                     elif 'Total Path Count' in content:
-                        content = content.split(':')
-                        fc_total_paths[device] = content[1]
+			content = content.split(':')
+                       	fc_total_paths[device] = content[1]
                     elif 'Operational Path Count:' in content:
-                        content = content.split(':')
-                        fc_active_paths[device] = content[1]
+                       	content = content.split(':')
+                       	fc_active_paths[device] = content[1]
+                    else:
+                        device="unknown"
                 for device in fc_total_paths.keys():
+                    if device == "unknown":
+                        continue
                     fc_lun.add_metric([device, 'active', host_name], float(fc_active_paths.get(device, 0)))
                     fc_lun.add_metric([device, 'total', host_name], float(fc_total_paths.get(device, 0)))
                 yield fc_lun
