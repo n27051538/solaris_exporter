@@ -27,6 +27,13 @@ May be it also will work on x86 platform, but this is not tested.
   - Whole system health via 'fmadm faulty' (FmadmCollector), requires pfexec of '/usr/sbin/fmadm'.
   - Zpool devices health via 'zpool status' command (ZpoolCollector)
 
+## Grafana dashboard.
+Dashboard config is located in file grafana-dashboard-solaris.json  
+Pic1
+![](sol-exporter-graph1.jpg)
+Pic2
+![](sol-exporter-graph2.jpg)
+
 ## Installation. 
 To use this exporter you need python2.7 and its modules prometheus_client, psutil.
 
