@@ -38,11 +38,12 @@ Pic2
 To use this exporter you need python2.7 and its modules prometheus_client, psutil.
 
 ### Solaris 10u11:
-    # Setup proxy vars to have access to internet  
-        export http_proxy=http://proxy.example.com:3128  
-        export https_proxy=https://proxy.example.com:3128  
-    # Install pkgutil  
-        pkgadd -d http://get.opencsw.org/now  
+    # Setup proxy vars to have access to internet   
+        export http_proxy=http://<user>:<password>@proxy.example.com:3128  
+        export https_proxy=https://<user>:<password>@proxy.example.com:3128  
+    # Install pkgutil    
+        wget http://get.opencsw.org/now 
+        pkgadd -d ./now
     # Update repo list and install 'py_pip', 'python27', 'python27_dev', 'gcc5core'  
         /opt/csw/bin/pkgutil -U  
         /opt/csw/bin/pkgutil -y -i py_pip  
@@ -74,7 +75,7 @@ To use this exporter you need python2.7 and its modules prometheus_client, psuti
         python2.7 solaris_exporter.py  
 
 ## SMF, Roles, Deployment. 
- - Create user and group '**prometheus**'
+ - Create user and group '**monitor**'
  - Run **'./solaris_exporter_smf.sh'** to create '**prometheus/solaris_exporter**' service.
  - The best way to do all installation tasks on all nodes is Ansible. See tasks file install_solaris_exporter.yml as an example for creating role. You have to create Role and add all declared variables to it.
  

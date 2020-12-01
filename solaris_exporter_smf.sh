@@ -1,8 +1,8 @@
 #!/bin/bash
 
 run_binary="solaris_exporter.py"
-service_user="prometheus"
-service_group="prometheus"
+service_user="monitor"
+service_group="monitor"
 
 os=$(uname -r)
 if [[ "$os" == "5.11" ]]; then

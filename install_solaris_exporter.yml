@@ -110,6 +110,9 @@
                 ansible_become: no
             - name: "install pkgutil for Solaris 10"
               shell: "{{ setproxy }} pkgadd -a /var/tmp/pkgadmin -d http://get.opencsw.org/now CSWpkgutil"
+              # need to split this task to wget-download and pkgadd if your proxy
+              # requires login and password due to pkgadd limitations
+              # https://github.com/n27051538/solaris_exporter/issues/2
               args:
                 creates: /opt/csw/bin/pkgutil
               when: create_admin_file.failed is sameas false
