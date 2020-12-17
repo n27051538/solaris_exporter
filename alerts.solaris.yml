@@ -93,6 +93,32 @@ groups:
           title: 'Found zpool failures'
           description: "Found {{ $value | humanize }} faults in zpools. Run 'zpool status' command to check on {{ $labels.ip }}"
 
+      - alert: 'metastat-status'
+        expr: solaris_exporter_metastat_faults > 0
+        for: 3m
+        labels:
+          severity: 'warning'
+        annotations:
+          title: 'Found metastat failures'
+          description: "Found {{ $value | humanize }} faults in metastat. Run 'metastat' command to check on {{ $labels.ip }}"
+
+      - alert: 'metadb-status'
+        expr: solaris_exporter_metadb_faults > 0
+        for: 3m
+        labels:
+          severity: 'warning'
+        annotations:
+          title: 'Found metadb failures'
+          description: "Found {{ $value | humanize }} faults in metastat. Run 'metadb' command to check on {{ $labels.ip }}"
+
+      - alert: 'prtdiag-status'
+        expr: solaris_exporter_prtdiag_rc > 0
+        for: 3m
+        labels:
+          severity: 'warning'
+        annotations:
+          title: 'Found non-zero prtdiag status'
+          description: "Found non-zero ({{ $value | humanize }}) return code of prtdiag. Run 'prtdiag -v' command to check on {{ $labels.ip }}"
 
       - alert: 'iostat-errors'
         expr: rate(solaris_exporter_disk_errors_total[3m]) > 0

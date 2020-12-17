@@ -828,6 +828,103 @@ class ZpoolCollector(object):
                     self.zpool_collector_timeouts.inc()
 
 
+class MetaStatCollector(object):
+    """
+    'metastat -a' checker
+    """
+    # timeout how match seconds is allowed to collect data
+    max_time_to_run = 5
+    metastat_collector_timeouts = Counter('solaris_exporter_metastat_timeouts',
+                                       'timeouts')
+    metastat_collector_errors = Counter('solaris_exporter_metastat_errors', 'Number of times when collector ran' +
+                                     ' with errors')
+    metastat_collector_run_time = Gauge('solaris_exporter_metastat_processing', 'Time spent processing request')
+
+    def collect(self):
+        with self.metastat_collector_run_time.time():
+            output, task_return_code, task_timeouted = run_shell_command('/usr/sbin/metastat -a',
+                                                                         self.max_time_to_run)
+            if task_return_code == 0 and task_timeouted is False:
+                lines = output.splitlines()
+                metastat = GaugeMetricFamily("solaris_exporter_metastat_faults", 'faults in metastat',
+                                            labels=['host'])
+                faults = 0
+                for line in lines:
+                    line = line.strip()
+                    if any(s in line for s in ['Needs maintenance', 'Last erred', 'Unavailable']):
+                        faults += 1
+                metastat.add_metric([host_name], float(faults))
+                yield metastat
+            else:
+                self.metastat_collector_errors.inc()
+                if task_timeouted:
+                    self.metastat_collector_timeouts.inc()
+
+
+class MetaDBCollector(object):
+    """
+    'metadb' checker
+    """
+    # timeout how match seconds is allowed to collect data
+    max_time_to_run = 5
+    metadb_collector_timeouts = Counter('solaris_exporter_metadb_timeouts',
+                                       'timeouts')
+    metadb_collector_errors = Counter('solaris_exporter_metadb_errors', 'Number of times when collector ran' +
+                                     ' with errors')
+    metadb_collector_run_time = Gauge('solaris_exporter_metadb_processing', 'Time spent processing request')
+
+    def collect(self):
+        with self.metadb_collector_run_time.time():
+            output, task_return_code, task_timeouted = run_shell_command('/usr/sbin/metadb',
+                                                                         self.max_time_to_run)
+            if task_return_code == 0 and task_timeouted is False:
+                lines = output.splitlines()
+                metadb = GaugeMetricFamily("solaris_exporter_metadb_faults", 'faults in metadb',
+                                            labels=['host'])
+                faults = 0
+                for line in lines:
+                    line = line.strip()
+                    if any(s in line for s in ['W', 'D', 'M']):
+                        faults += 1
+                metadb.add_metric([host_name], float(faults))
+                yield metadb
+            else:
+                self.metadb_collector_errors.inc()
+                if task_timeouted:
+                    self.metadb_collector_timeouts.inc()
+
+
+class PrtdiagCollector(object):
+    """
+    'prtdiag' checker
+    """
+    # timeout how match seconds is allowed to collect data
+    max_time_to_run = 50
+    prtdiag_collector_timeouts = Counter('solaris_exporter_prtdiag_timeouts', 'timeouts')
+    prtdiag_collector_run_time = Gauge('solaris_exporter_prtdiag_processing', 'Time spent processing request')
+
+    its_time_to_run_now = 0
+    # repeat prtdiag only after each 60 times, write result from cache instead (prtdiag is heavy)
+    repeat_prtdiag_after_times = 60
+
+    def collect(self):
+        global prtdiag_return_code
+        global prtdiag_timeouted
+        if self.its_time_to_run_now == 0:
+            with self.prtdiag_collector_run_time.time():
+                prtdiag_output, prtdiag_return_code, prtdiag_timeouted = run_shell_command('/usr/sbin/prtdiag -v',
+                                                                         self.max_time_to_run)
+                if prtdiag_timeouted is True:
+                    self.prtdiag_collector_timeouts.inc()
+        self.its_time_to_run_now += 1
+        self.its_time_to_run_now %= self.repeat_prtdiag_after_times
+
+        if prtdiag_timeouted is False:
+            prtdiag = GaugeMetricFamily("solaris_exporter_prtdiag_rc", 'prtdiag return code', labels=['host'])
+            prtdiag.add_metric([host_name], float(prtdiag_return_code))
+            yield prtdiag
+
+
 # replace start_http_server() method to capture error messages in my_http_error_handler()
 # remove this to revert to prometheus_client.start_http_server
 from BaseHTTPServer import HTTPServer
@@ -861,6 +958,9 @@ if __name__ == '__main__':
     disk_dictionary = get_disk_dictionary()
     pset_dictionary = get_pset_dictionary()
 
+    prtdiag_return_code = 0
+    prtdiag_timeouted = False
+
     # collectors enabled for all zones:
     collectors = [
         CurTimeCollector(),
@@ -893,6 +993,9 @@ if __name__ == '__main__':
             FCinfoCollector(),
             SVCSCollector(),
             FmadmCollector(),
+            PrtdiagCollector(),
+            MetaDBCollector(),
+            MetaStatCollector(),
             ])
 
     # enable zone collectors only if global zones have localzones or we are running inside localzone
