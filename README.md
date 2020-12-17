@@ -26,6 +26,8 @@ May be it also will work on x86 platform, but this is not tested.
   - System Services health via 'svcs -x' command (SVCSCollector);
   - Whole system health via 'fmadm faulty' (FmadmCollector), requires pfexec of '/usr/sbin/fmadm'.
   - Zpool devices health via 'zpool status' command (ZpoolCollector)
+  - prtdiag -v return code(PrtdiagCollector)
+  - Solaris Volume Manager disk status (MetaStatCollector, MetaDBCollector).
 
 ## Grafana dashboard.
 Dashboard config is located in file grafana-dashboard-solaris.json  
