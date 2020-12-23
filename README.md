@@ -10,6 +10,7 @@ May be it also will work on x86 platform, but this is not tested.
  - 2020 Jan 31. Initial  
  - 2020 Feb 04. Added UpTime in UpTimeCollector.  
  - 2020 Feb 09. Added DiskErrorCollector, ZpoolCollector, FmadmCollector, SVCSCollector, FCinfoCollector    
+ - 2020 Dec 17. Added PrtdiagCollector, MetaStatCollector, MetaDBCollector
 
 ## Provides info about:
   - Solaris Zones CPU Usage with processor sets info (PerZoneCpuCollector);
