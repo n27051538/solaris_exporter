@@ -11,6 +11,7 @@ May be it also will work on x86 platform, but this is not tested.
  - 2020 Feb 04. Added UpTime in UpTimeCollector.  
  - 2020 Feb 09. Added DiskErrorCollector, ZpoolCollector, FmadmCollector, SVCSCollector, FCinfoCollector    
  - 2020 Dec 17. Added PrtdiagCollector, MetaStatCollector, MetaDBCollector
+ - 2021 Jan 05. Added TextFileCollector, SVCSCollector now enabled for all zones (Thanks to Marcel Peter)
 
 ## Provides info about:
   - Solaris Zones CPU Usage with processor sets info (PerZoneCpuCollector);
@@ -29,6 +30,7 @@ May be it also will work on x86 platform, but this is not tested.
   - Zpool devices health via 'zpool status' command (ZpoolCollector)
   - prtdiag -v return code(PrtdiagCollector)
   - Solaris Volume Manager disk status (MetaStatCollector, MetaDBCollector).
+  - Get info from text files *.prom in folder provided by text_file_path var (TextFileCollector).
 
 ## Grafana dashboard.
 Dashboard config is located in file grafana-dashboard-solaris.json  

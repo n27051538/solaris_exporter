@@ -1,10 +1,13 @@
 #!/usr/bin/python
 """
 sparc-exporter
-version 1.0
+version v2021Jan05
     2020 Jan 31. Initial
     2020 Feb 04. Added UpTime in UpTimeCollector.
     2020 Feb 09. Added DiskErrorCollector, ZpoolCollector, FmadmCollector, SVCSCollector, FCinfoCollector
+    2020 Dec 17. Added PrtdiagCollector, MetaStatCollector, MetaDBCollector
+    2021 Jan 05. Added TextFileCollector, SVCSCollector now enabled for all zones (Thanks to Marcel Peter)
+
 Written by Alexander Golikov for collecting SPARC Solaris metrics for Prometheus.
 
 Tested on Solaris 11.3.25, 11.4.4, 10u11(limited) SPARC.
@@ -25,6 +28,8 @@ This exporter provides info about:
   - System Services health via 'svcs -x' command (SVCSCollector);
   - Whole system health via 'fmadm faulty' (FmadmCollector), requires pfexec of '/usr/sbin/fmadm'.
   - Zpool devices health via 'zpool status' command (ZpoolCollector)
+  - Solaris Volume Manager disk status (MetaStatCollector, MetaDBCollector).
+  - Get info from text files *.prom in folder provided by text_file_path var (TextFileCollector).
 
 Installation. To use this exporter you need python2.7 and its modules prometheus_client, psutil.
 
@@ -73,10 +78,13 @@ import socket
 import psutil
 from psutil import _psutil_sunos as cext
 import os
-from prometheus_client.core import REGISTRY, Counter, Gauge, GaugeMetricFamily, CounterMetricFamily
+from prometheus_client.core import REGISTRY, Counter, Gauge, GaugeMetricFamily, CounterMetricFamily, UntypedMetricFamily
+from prometheus_client.parser import text_string_to_metric_families
 from prometheus_client import start_http_server
+from glob import glob
 
 exporter_port = 9100
+text_file_path = '/opt/solaris_exporter/'
 dictionaries_refresh_interval_sec = 600
 disk_operations_dictionary = {
     'reads': 'number of read operations',
@@ -925,6 +933,25 @@ class PrtdiagCollector(object):
             yield prtdiag
 
 
+class TextFileCollector(object):
+    """
+    Read Input from a textfile to include in output. Thanks to Marcel Peter
+    """
+    TextFileCollector_run_time = Gauge('solaris_exporter_textfile_processing', 'Time spent processing request')
+
+    def collect(self):
+        with self.TextFileCollector_run_time.time():
+            fpath = text_file_path
+            fnames = glob(fpath + '*.prom')
+            for file_name_r in fnames:
+                # filename to open for read
+                with open(file_name_r, 'r') as text_object:
+                    output = text_object.read()
+                    for family in text_string_to_metric_families(output):
+                        yield family
+                    text_object.close
+
+
 # replace start_http_server() method to capture error messages in my_http_error_handler()
 # remove this to revert to prometheus_client.start_http_server
 from BaseHTTPServer import HTTPServer
@@ -967,6 +994,8 @@ if __name__ == '__main__':
         UpTimeCollector(),
         NetworkCollector(),
         DiskSpaceCollector(),
+        SVCSCollector(),
+        TextFileCollector(),
     ]
 
     zones, rc, timeouted = run_shell_command('/usr/sbin/zoneadm list -icp', 3)
@@ -991,7 +1020,6 @@ if __name__ == '__main__':
             DiskErrorCollector(),
             ZpoolCollector(),
             FCinfoCollector(),
-            SVCSCollector(),
             FmadmCollector(),
             PrtdiagCollector(),
             MetaDBCollector(),
