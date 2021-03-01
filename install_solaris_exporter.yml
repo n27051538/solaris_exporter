@@ -154,7 +154,7 @@
                 path: /opt/csw/bin/gcc-5.2
             - name: "Install Python 2.7 module psutil for Solaris 10"
               shell: "cd /root; HOME=/root; export HOME; USER=root; export USER; LC_ALL=C; export LC_ALL;
-                        {{ setproxy }} /opt/csw/bin/pip2.7 install psutil"
+                        {{ setproxy }} /opt/csw/bin/pip2.7 install psutil==5.7.0"
               args:
                 creates: /opt/csw/lib/python2.7/site-packages/psutil
           when: 'psutil_present.msg is defined and "is absent, cannot continue" in psutil_present.msg'
@@ -237,7 +237,7 @@
                 path: /usr/bin/cc
             - name: "install psutil with pip-2.7 for Solaris 11"
               shell: "cd /root; HOME=/root; export HOME; USER=root; export USER; LC_ALL=C; export LC_ALL;
-                      {{ setproxy }} CFLAGS=-m32; export CFLAGS; /usr/bin/pip-2.7 install psutil"
+                      {{ setproxy }} CFLAGS=-m32; export CFLAGS; /usr/bin/pip-2.7 install psutil==5.7.0"
               args:
                 creates: /usr/lib/python2.7/vendor-packages/psutil
           when: 'psutil_present.msg is defined and "is absent, cannot continue" in psutil_present.msg'

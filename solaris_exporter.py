@@ -7,6 +7,7 @@ version v2021Jan05
     2020 Feb 09. Added DiskErrorCollector, ZpoolCollector, FmadmCollector, SVCSCollector, FCinfoCollector
     2020 Dec 17. Added PrtdiagCollector, MetaStatCollector, MetaDBCollector
     2021 Jan 05. Added TextFileCollector, SVCSCollector now enabled for all zones (Thanks to Marcel Peter)
+    2021 Mar 01. Fixed psutil version to 5.7.0 (something changed in the newer versions, have to time to look at)
 
 Written by Alexander Golikov for collecting SPARC Solaris metrics for Prometheus.
 
@@ -50,7 +51,7 @@ Installation. To use this exporter you need python2.7 and its modules prometheus
             /opt/csw/bin/pip2.7 install prometheus_client
         # Install Python 2.7 module psutil, it have to compile some libs, but we preinstalled all that needed
             ln -s /opt/csw/bin/gcc-5.5 /opt/csw/bin/gcc-5.2
-            /opt/csw/bin/pip2.7 install psutil
+            /opt/csw/bin/pip2.7 install psutil==5.7.0
         # Run exporter, check http://ip:9100
             /opt/csw/bin/python2.7 solaris_exporter.py
 
@@ -65,7 +66,7 @@ Installation. To use this exporter you need python2.7 and its modules prometheus
             pkg install pkg:/developer/gcc/gcc-c-5
             ln -s /usr/bin/gcc /usr/bin/cc
             export CFLAGS=-m32
-            pip install psutil
+            pip install psutil==5.7.0
         # Run exporter, check http://ip:9100
             python2.7 solaris_exporter.py
 
