@@ -4,7 +4,7 @@
 SPARC solaris exporter for Prometheus.   
 Written by Alexander Golikov for collecting SPARC Solaris metrics for Prometheus.  
 Tested on Solaris 11.3.25, 11.4.4, 10u11(limited) SPARC.  
-May be it also will work on x86 platform, but this is not tested.
+Also work on x86 platform, community-tested with Openindiana (x86) (OI-hipster-minimal-20201031.iso) and Solaris10u11. 
 
 ## versions
  - 2020 Jan 31. Initial  
