@@ -8,7 +8,7 @@ version v2022Jan24
     2020 Dec 17. Added PrtdiagCollector, MetaStatCollector, MetaDBCollector
     2021 Jan 05. Added TextFileCollector, SVCSCollector now enabled for all zones (Thanks to Marcel Peter)
     2021 Mar 01. Fixed psutil version to 5.7.0 (something changed in the newer versions, have to time to look at)
-    2022 Jan 24. Added support for Python 3. In testing.
+    2022 Jan 24. Added support for Python 3. In testing. 
 
 Written by Alexander Golikov for collecting SPARC Solaris metrics for Prometheus.
 
