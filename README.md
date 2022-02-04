@@ -3,7 +3,7 @@
 ## Description
 SPARC solaris exporter for Prometheus.   
 Written by Alexander Golikov for collecting SPARC Solaris metrics for Prometheus.  
-Tested on Solaris 11.3.25, 11.4.4, 10u11(limited) SPARC.  
+Tested on Solaris 11.3.25, 11.4.4, 11.4.41, 10u11(limited) SPARC.  
 Also work on x86 platform, community-tested with Openindiana (x86) (OI-hipster-minimal-20201031.iso) and Solaris10u11. 
 
 ## versions
@@ -12,9 +12,10 @@ Also work on x86 platform, community-tested with Openindiana (x86) (OI-hipster-m
  - 2020 Feb 09. Added DiskErrorCollector, ZpoolCollector, FmadmCollector, SVCSCollector, FCinfoCollector    
  - 2020 Dec 17. Added PrtdiagCollector, MetaStatCollector, MetaDBCollector
  - 2021 Jan 05. Added TextFileCollector, SVCSCollector now enabled for all zones (Thanks to Marcel Peter)
- - 2021 Mar 01. Fixed psutil version to 5.7.0 (something changed in the newer versions, have to time to look at)
+ - 2021 Mar 01. [Fixed](https://github.com/n27051538/solaris_exporter/issues/4) psutil version to 5.7.0 (something changed in the newer versions, have to time to look at)
  - 2022 Jan 24. Added support for Python 3. In testing.
  - 2022 Feb 04. Documentation update for support of Solaris 11.4.41. In testing.
+ - 2022 Feb 05. [Fixed](https://github.com/n27051538/solaris_exporter/issues/7) support of Python 2.7 for Solaris 11.4.41. In testing.
 
 ## Provides info about:
   - Solaris Zones CPU Usage with processor sets info (PerZoneCpuCollector);
@@ -104,7 +105,7 @@ To use this exporter you need Python2.7 or Python3.x and its modules prometheus_
         ln -s /usr/bin/gcc /usr/bin/cc  
         export CFLAGS=-m32  
         pip-2.7 install psutil==5.7.0  
-        # if you have troubeles with compilation, try to switch to gcc-c-5 and Python 3.7   
+        # if you have troubles with compilation, try to switch to gcc-c-9 and Python 3.7   
     # Run exporter, check http://ip:9100  
         export LANG=C  
         python2.7 solaris_exporter.py  
@@ -118,7 +119,7 @@ To use this exporter you need Python2.7 or Python3.x and its modules prometheus_
             pip-3.7 install prometheus_client  
     # Install Python 3.7 module psutil  
     # Also you could get psutil for Python 3.7 via 'pkg install library/python/psutil-37',  
-    # but its old version '5.6.7' not adapted for Sol11.4.41 changes, it fails at 'swap -l' output.  
+    # but its old version '5.6.7' not adapted for Sol11.4.41 changes, fails at 'swap -l' output, have network dev inaccuracy. 
     # The best way is to install actual version of psutil (tested on '5.9.0')   
         pkg install pkg:/developer/gcc/gcc-c-9  
         ln -s /usr/bin/gcc /usr/bin/cc  

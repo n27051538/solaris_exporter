@@ -1,15 +1,17 @@
 #!/usr/bin/python
 """
 solaris_exporter.py
-version v2022Feb04
+version v2022Feb05
     2020 Jan 31. Initial
     2020 Feb 04. Added UpTime in UpTimeCollector.
     2020 Feb 09. Added DiskErrorCollector, ZpoolCollector, FmadmCollector, SVCSCollector, FCinfoCollector
     2020 Dec 17. Added PrtdiagCollector, MetaStatCollector, MetaDBCollector
     2021 Jan 05. Added TextFileCollector, SVCSCollector now enabled for all zones (Thanks to Marcel Peter)
     2021 Mar 01. Fixed psutil version to 5.7.0 (something changed in the newer versions, have to time to look at)
-    2022 Jan 24. Added support for Python 3. In testing.
+    2022 Jan 24. Added support for Python 3.7. In testing.
     2022 Feb 04. Documentation update for support of Solaris 11.4.41. In testing.
+    2022 Feb 05. Fixed support of Python 2.7 for Solaris 11.4.41
+                 (https://github.com/n27051538/solaris_exporter/issues/7). In testing.
 
 Written by Alexander Golikov for collecting SPARC Solaris metrics for Prometheus.
 
@@ -96,6 +98,7 @@ Installation. To use this exporter you need python2.7 or python3.x and its modul
             ln -s /usr/bin/gcc /usr/bin/cc
             export CFLAGS=-m32
             pip-2.7 install psutil==5.7.0
+            # if you have troubles with compilation, try to switch to gcc-c-9 and Python 3.7
         # Run exporter, check http://ip:9100
             export LANG=C
             python2.7 solaris_exporter.py
@@ -109,7 +112,7 @@ Installation. To use this exporter you need python2.7 or python3.x and its modul
             pip-3.7 install prometheus_client
         # Install Python 3.7 module psutil
         # Also you could get psutil for Python 3.7 via 'pkg install library/python/psutil-37',
-        # but its old version '5.6.7' not adapted for Sol11.4.41 changes, it fails at 'swap -l' output.
+        # but its old version '5.6.7' not adapted for Sol11.4.41 changes, fails at 'swap -l' output, have network dev inaccuracy.
         # The best way is to install actual version of psutil (tested on '5.9.0')
             pkg install pkg:/developer/gcc/gcc-c-9
             ln -s /usr/bin/gcc /usr/bin/cc
@@ -131,6 +134,7 @@ from prometheus_client.core import REGISTRY, Counter, Gauge, GaugeMetricFamily, 
 from prometheus_client.parser import text_string_to_metric_families
 from prometheus_client import start_http_server
 from glob import glob
+from collections import namedtuple
 
 exporter_port = 9100
 text_file_path = '/opt/solaris_exporter/'
@@ -489,21 +493,26 @@ class MemCollector(object):
                                                 'python psutil counters, Memory usage in bytes.',
                                                 labels=['host', 'type', 'counter'])
             ram = psutil.virtual_memory()
-            try:
-                swap = psutil.swap_memory()
-            except ValueError:
-                print('old version of psutil module, skipping memory stat, you need to update it to 5.9.0+ and run '
-                      'Python3.7')
-                return
             worker_stat_mem.add_metric([host_name, 'virtual', 'used'], ram.used)
             worker_stat_mem.add_metric([host_name, 'virtual', 'available'], ram.available)
             worker_stat_mem.add_metric([host_name, 'virtual', 'total'], ram.total)
             worker_stat_mem.add_metric([host_name, 'virtual', 'free'], ram.free)
+
+            #try:
+            #    swap = psutil.swap_memory()
+            #except ValueError:
+                # print('old version of psutil module, skipping swap stat, you need to update it to 5.9.0+ and run '
+                #       'Python3.7')
+            # see https://github.com/n27051538/solaris_exporter/issues/7
+            swap = psutil_local_swap_memory()
+
             worker_stat_mem.add_metric([host_name, 'swap', 'total'], swap.total)
             worker_stat_mem.add_metric([host_name, 'swap', 'used'], swap.used)
             worker_stat_mem.add_metric([host_name, 'swap', 'free'], swap.free)
             worker_stat_mem.add_metric([host_name, 'swap', 'sin'], swap.sin)
             worker_stat_mem.add_metric([host_name, 'swap', 'sout'], swap.sout)
+
+
         yield worker_stat_mem
 
 
@@ -538,6 +547,42 @@ class MemCollector(object):
 #         ntuple = _common.sdiskpart(device, mountpoint, fstype, opts)
 #         retlist.append(ntuple)
 #     return retlist
+
+# This code is rewritten psutil.swap_memory() due to bug with swap -l in Solaris 11.4.41 due to
+# changes in swap -l output. Also now we are ignoring swap device absence.
+def psutil_local_swap_memory():
+    """Report swap memory metrics."""
+    page_size = os.sysconf('SC_PAGE_SIZE')
+    sin, sout = cext.swap_mem()
+    FNULL = open(os.devnull, 'w')
+    p = subprocess.Popen(['/usr/bin/env', 'PATH=/usr/sbin:/sbin:%s' %
+                          os.environ['PATH'], 'swap', '-l'],
+                         stdout=subprocess.PIPE, stderr=FNULL)
+    stdout, stderr = p.communicate()
+    FNULL.close()
+    stdout = stdout.decode('utf-8')
+    if p.returncode != 0:
+        total = free = 0
+        # raise RuntimeError("'swap -l' failed (retcode=%s)" % p.returncode)
+    else:
+        lines = stdout.strip().split('\n')[1:]
+        # if not lines:
+        #    raise RuntimeError('no swap device(s) configured')
+        total = free = 0
+        for line in lines:
+            line = line.split()
+            t, f = line[3:5]
+            total += int(int(t) * 512)
+            free += int(int(f) * 512)
+    used = total - free
+
+    try:
+        percent = (float(used) / total) * 100
+    except ZeroDivisionError:
+        percent = 0.0
+
+    sswap = namedtuple('sswap', ['total', 'used', 'free', 'percent', 'sin', 'sout'])
+    return sswap(total, used, free, percent, sin * page_size, sout * page_size)
 
 
 class DiskSpaceCollector(object):
