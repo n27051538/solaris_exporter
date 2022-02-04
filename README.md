@@ -45,7 +45,7 @@ Pic2
 ## Installation. 
 To use this exporter you need Python2.7 or Python3.x and its modules prometheus_client, psutil.
  
-###Solaris 10u11:  
+### Solaris 10u11:  
     # Setup proxy vars to have access to internet  
         export http_proxy=http://proxy.example.com:3128  
         export https_proxy=http://proxy.example.com:3128  
@@ -66,7 +66,7 @@ To use this exporter you need Python2.7 or Python3.x and its modules prometheus_
             # pip3 is not included in pkgutil, we need to install it by hands  
             # download pip3.3 installer [https://bootstrap.pypa.io/pip/3.3/get-pip.py] and run it with python3.3  
             /opt/csw/bin/python3.3 get-pip.py  
-    #Install gcc5core  
+    # Install gcc5core  
         /opt/csw/bin/pkgutil -y -i gcc5core  
     # Install Python module prometheus_client  
         # Python 2.7  
@@ -90,7 +90,7 @@ To use this exporter you need Python2.7 or Python3.x and its modules prometheus_
         /opt/csw/bin/python3.3 solaris_exporter.py  
  
  
-####Solaris 11.4.4 (this way works with Python 2.7):  
+#### Solaris 11.4.4 (this way works with Python 2.7):  
     # Setup proxy vars to have access to internet  
         export http_proxy=http://proxy.example.com:3128  
         export https_proxy=http://proxy.example.com:3128  
@@ -110,7 +110,7 @@ To use this exporter you need Python2.7 or Python3.x and its modules prometheus_
         python2.7 solaris_exporter.py  
  
  
-####Solaris 11.4.41 (this way works with Python 3.7):  
+#### Solaris 11.4.41 (this way works with Python 3.7):  
     # Setup proxy vars to have access to internet  
             export http_proxy=http://proxy.example.com:3128  
             export https_proxy=http://proxy.example.com:3128  
