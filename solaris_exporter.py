@@ -489,7 +489,12 @@ class MemCollector(object):
                                                 'python psutil counters, Memory usage in bytes.',
                                                 labels=['host', 'type', 'counter'])
             ram = psutil.virtual_memory()
-            swap = psutil.swap_memory()
+            try:
+                swap = psutil.swap_memory()
+            except ValueError:
+                print('old version of psutil module, skipping memory stat, you need to update it to 5.9.0+ and run '
+                      'Python3.7')
+                return
             worker_stat_mem.add_metric([host_name, 'virtual', 'used'], ram.used)
             worker_stat_mem.add_metric([host_name, 'virtual', 'available'], ram.available)
             worker_stat_mem.add_metric([host_name, 'virtual', 'total'], ram.total)
@@ -1119,4 +1124,3 @@ if __name__ == '__main__':
         except KeyboardInterrupt:
             print("\nExit Requested\n")
             exit()
-
