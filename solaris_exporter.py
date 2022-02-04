@@ -1,14 +1,15 @@
 #!/usr/bin/python
 """
-sparc-exporter
-version v2022Jan24
+solaris_exporter.py
+version v2022Feb04
     2020 Jan 31. Initial
     2020 Feb 04. Added UpTime in UpTimeCollector.
     2020 Feb 09. Added DiskErrorCollector, ZpoolCollector, FmadmCollector, SVCSCollector, FCinfoCollector
     2020 Dec 17. Added PrtdiagCollector, MetaStatCollector, MetaDBCollector
     2021 Jan 05. Added TextFileCollector, SVCSCollector now enabled for all zones (Thanks to Marcel Peter)
     2021 Mar 01. Fixed psutil version to 5.7.0 (something changed in the newer versions, have to time to look at)
-    2022 Jan 24. Added support for Python 3. In testing. 
+    2022 Jan 24. Added support for Python 3. In testing.
+    2022 Feb 04. Documentation update for support of Solaris 11.4.41. In testing.
 
 Written by Alexander Golikov for collecting SPARC Solaris metrics for Prometheus.
 
@@ -33,78 +34,89 @@ This exporter provides info about:
   - Solaris Volume Manager disk status (MetaStatCollector, MetaDBCollector).
   - Get info from text files *.prom in folder provided by text_file_path var (TextFileCollector).
 
-Installation. To use this exporter you need python2.7 and its modules prometheus_client, psutil.
+Installation. To use this exporter you need python2.7 or python3.x and its modules prometheus_client, psutil.
+
 
     Solaris 10u11:
         # Setup proxy vars to have access to internet
             export http_proxy=http://proxy.example.com:3128
-            export https_proxy=https://proxy.example.com:3128
+            export https_proxy=http://proxy.example.com:3128
         # Install pkgutil
-            pkgadd -d http://get.opencsw.org/now
+            wget http://get.opencsw.org/now
+            pkgadd -d ./now
         # Update repo list
             /opt/csw/bin/pkgutil -U
-
-        # Install Python 2.7 or Python 3.3
-        # Python 2.7
-            /opt/csw/bin/pkgutil -y -i python27
-            /opt/csw/bin/pkgutil -y -i python27_dev
-            /opt/csw/bin/pkgutil -y -i py_pip
-            /usr/sbin/pkgchk -L CSWpy-pip               # list installed files if you need
-        # Python 3.3
-            /opt/csw/bin/pkgutil -y -i python33
-            /opt/csw/bin/pkgutil -y -i python33_dev
-            # pip3 is not included in pkgutil, we need to install it by hands
-            # download pip3.3 installer [https://bootstrap.pypa.io/pip/3.3/get-pip.py] and run it with python3.3
-            /opt/csw/bin/python3.3 get-pip.py
-
+        # Install Python 2.7 or Python 3.3 (it works on both)
+            # Python 2.7 (preferred)
+                /opt/csw/bin/pkgutil -y -i python27
+                /opt/csw/bin/pkgutil -y -i python27_dev
+                /opt/csw/bin/pkgutil -y -i py_pip
+                /usr/sbin/pkgchk -L CSWpy-pip               # list installed files if you need
+            # or Python 3.3
+                /opt/csw/bin/pkgutil -y -i python33
+                /opt/csw/bin/pkgutil -y -i python33_dev
+                # pip3 is not included in pkgutil, we need to install it by hands
+                # download pip3.3 installer [https://bootstrap.pypa.io/pip/3.3/get-pip.py] and run it with python3.3
+                /opt/csw/bin/python3.3 get-pip.py
         #Install gcc5core
             /opt/csw/bin/pkgutil -y -i gcc5core
-
-        # Install Python 2.7 or 3.3 module prometheus_client, it installes eassily.
-            /opt/csw/bin/pip2.7 install prometheus_client
-            # or
-            /opt/csw/bin/pip3.3 install prometheus_client
-        # Install Python 2.7 or 3.3 module psutil, it have to compile some libs, but we preinstalled all that needed
+        # Install Python module prometheus_client, it installes eassily.
+            # Python 2.7
+                /opt/csw/bin/pip2.7 install prometheus_client
+            # or Python 3.3
+                /opt/csw/bin/pip3.3 install prometheus_client
+        # Install Python module psutil, it have to compile some libs, but we preinstalled all that needed
             ln -s /opt/csw/bin/gcc-5.5 /opt/csw/bin/gcc-5.2
-            /opt/csw/bin/pip2.7 install psutil==5.7.0
-                  # note that the latest version of psutil not supports Python2.7, that is why version of psutil is 5.7.0
-            # or
-            /opt/csw/bin/pip3.3 install psutil
+            # Python 2.7
+                # note that the latest version of psutil not supports Python2.7,
+                # that is why version of psutil is fixed to '5.7.0'
+                    /opt/csw/bin/pip2.7 install psutil==5.7.0
+            # or Python 3.3
+                /opt/csw/bin/pip3.3 install psutil
         # Run exporter, check http://ip:9100
+            # Python 2.7
+            export LANG=C
             /opt/csw/bin/python2.7 solaris_exporter.py
-            # or
+            # or Python 3.3
+            export LANG=C
             /opt/csw/bin/python3.3 solaris_exporter.py
 
-    Solaris 11.4(in development for Python 3.5, works for Python 2.7):
+
+    Solaris 11.4.4(this way works with Python 2.7, it is included in this release):
         # Setup proxy vars to have access to internet
-            export http_proxy=https://proxy.example.com:3128
-            export https_proxy=https://proxy.example.com:3128
-        # Install Python 2.7 or Python 3.5 module prometheus_client, it installes eassily.
+            export http_proxy=http://proxy.example.com:3128
+            export https_proxy=http://proxy.example.com:3128
+        # Install Python 2.7 module prometheus_client, it installs easy.
             pip-2.7 install prometheus_client
-            # or
-            pip-3.5 install prometheus_client
-        # Install Python 2.7 or 3.5 module psutil, it have to compile some libs
+        # Install Python 2.7 module psutil, it have to compile some libs
         # Also you could get psutil for Python 2.7 via 'pkg install library/python/psutil-27',
         # but it returns wrong Network statistics, tested from Solaris 11.4.4 repo.
-        # Note that the latest version of psutil not supports Python2.7, that is why version of psutil is 5.7.0
-        # Python 2.7
+        # The latest version of psutil not supports Python2.7, that is why version of psutil is fixed on '5.7.0'
             pkg install pkg:/developer/gcc/gcc-c-5
             ln -s /usr/bin/gcc /usr/bin/cc
             export CFLAGS=-m32
             pip-2.7 install psutil==5.7.0
-
-        # or Python 3.5 (this not works for me still, see https://github.com/giampaolo/psutil/issues/2065
-            pkg install pkg:/developer/gcc/gcc-c
-            # Download https://bootstrap.pypa.io/pip/3.5/get-pip.py and upgrade pip-3.5
-            python3.5 get-pip-3.5.py
-            python3.5 -m pip install --upgrade setuptools
-            python3.5 -m pip install install psutil
-            # also you may try to install something like (not tested):
-                  pkg install library/python/psutil-35
         # Run exporter, check http://ip:9100
+            export LANG=C
             python2.7 solaris_exporter.py
-            # or
-            python3.5 solaris_exporter.py
+
+
+    Solaris 11.4.41(this way works with Python 3.7):
+        # Setup proxy vars to have access to internet
+            export http_proxy=http://proxy.example.com:3128
+            export https_proxy=http://proxy.example.com:3128
+        # Install Python 3.7 module prometheus_client, it installs easу.
+            pip-3.7 install prometheus_client
+        # Install Python 3.7 module psutil
+        # Also you could get psutil for Python 3.7 via 'pkg install library/python/psutil-37',
+        # but version '5.6.7' returns wrong Network statistics, tested from Solaris 11.4.41 repo.
+        # The best way is to install actual version of psutil (tested on '5.9.0')
+            pkg install pkg:/developer/gcc/gcc-c-9
+            ln -s /usr/bin/gcc /usr/bin/cc
+            pip-3.7 install psutil==5.9.0
+        # Run exporter, check http://ip:9100
+            export LANG=C
+            python3.7 solaris_exporter.py
 
 """
 import time
