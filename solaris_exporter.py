@@ -15,8 +15,8 @@ version v2022Feb05
 
 Written by Alexander Golikov for collecting SPARC Solaris metrics for Prometheus.
 
-Tested on Solaris 11.3.25, 11.4.4, 10u11(limited) SPARC.
-May be it also will work on x86 platform, but this is not tested.
+Tested on Solaris 11.3.25, 11.4.4, 11.4.41, 10u11(limited) SPARC.
+Also work on x86 platform, community-tested with Openindiana (x86) (OI-hipster-minimal-20201031.iso) and Solaris10u11.
 
 This exporter provides info about:
   - Solaris Zones CPU Usage with processor sets info (PerZoneCpuCollector);
