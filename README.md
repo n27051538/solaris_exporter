@@ -15,7 +15,7 @@ Also work on x86 platform, community-tested with Openindiana (x86) (OI-hipster-m
  - 2021 Mar 01. [Fixed](https://github.com/n27051538/solaris_exporter/issues/4) psutil version to 5.7.0 (something changed in the newer versions, have to time to look at)
  - 2022 Jan 24. Added support for Python 3. In testing.
  - 2022 Feb 04. Documentation update for support of Solaris 11.4.41. In testing.
- - 2022 Feb 05. [Fixed](https://github.com/n27051538/solaris_exporter/issues/7) support of Python 2.7 for Solaris 11.4.41. In testing.
+ - 2022 Feb 05. [Fixed](https://github.com/n27051538/solaris_exporter/issues/7) support of Python 2.7 for Solaris 11.4.41.
 
 ## Provides info about:
   - Solaris Zones CPU Usage with processor sets info (PerZoneCpuCollector);
