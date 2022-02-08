@@ -11,7 +11,7 @@ version v2022Feb05
     2022 Jan 24. Added support for Python 3.7. In testing.
     2022 Feb 04. Documentation update for support of Solaris 11.4.41. In testing.
     2022 Feb 05. Fixed support of Python 2.7 for Solaris 11.4.41
-                 (https://github.com/n27051538/solaris_exporter/issues/7). In testing.
+                 (https://github.com/n27051538/solaris_exporter/issues/7).
 
 Written by Alexander Golikov for collecting SPARC Solaris metrics for Prometheus.
 
