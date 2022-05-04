@@ -1,22 +1,22 @@
 #!/usr/bin/python
 """
 solaris_exporter.py
-version v2022Feb05
+version v2022May04
     2020 Jan 31. Initial
     2020 Feb 04. Added UpTime in UpTimeCollector.
     2020 Feb 09. Added DiskErrorCollector, ZpoolCollector, FmadmCollector, SVCSCollector, FCinfoCollector
     2020 Dec 17. Added PrtdiagCollector, MetaStatCollector, MetaDBCollector
     2021 Jan 05. Added TextFileCollector, SVCSCollector now enabled for all zones (Thanks to Marcel Peter)
     2021 Mar 01. Fixed psutil version to 5.7.0 (something changed in the newer versions, have to time to look at)
-    2022 Jan 24. Added support for Python 3.7. In testing.
-    2022 Feb 04. Documentation update for support of Solaris 11.4.41. In testing.
-    2022 Feb 05. Fixed support of Python 2.7 for Solaris 11.4.41
-                 (https://github.com/n27051538/solaris_exporter/issues/7).
+    2022 Jan 24. Added support for Python 3.7.
+    2022 Feb 04. Documentation update for support of Solaris 11.4.41.
+    2022 Feb 05. Fixed support of Python 2.7 for Solaris 11.4.41 (https://github.com/n27051538/solaris_exporter/issues/7).
+    2022 May 04. Added LdomsLsCollector (https://github.com/n27051538/solaris_exporter/discussions/11) .
 
 Written by Alexander Golikov for collecting SPARC Solaris metrics for Prometheus.
 
 Tested on Solaris 11.3.25, 11.4.4, 11.4.41, 10u11(limited) SPARC.
-Also work on x86 platform, community-tested with Openindiana (x86) (OI-hipster-minimal-20201031.iso) and Solaris10u11.
+Also work on x86 platform, community-tested with Openindiana (x86) (OI-hipster-minimal-20201031.iso)
 
 This exporter provides info about:
   - Solaris Zones CPU Usage with processor sets info (PerZoneCpuCollector);
@@ -1062,9 +1062,148 @@ class TextFileCollector(object):
                         yield family
                     text_object.close
 
+class LdomsLsCollector(object):
+    """
+    Read input from 'ldm list' command
+    """
+    # timeout how match seconds is allowed to collect data
+    max_time_to_run = 3
+    ldom_collector_timeouts = Counter('solaris_exporter_ldom_collector_timeouts',
+                                        'Number of times when ldom collector ran' +
+                                        ' more than ' + str(max_time_to_run) + ' seconds')
+    ldom_collector_errors = Counter('solaris_exporter_ldom_collector_errors',
+                                    'Number of times when ldom collector ran with errors')
+    ldom_collector_run_time = Gauge('solaris_exporter_ldom_collector_processing',
+                                    'Time spent processing request')
 
-# replace start_http_server() method to capture error messages in my_http_error_handler()
-# remove this to revert to prometheus_client.start_http_server
+    def collect(self):
+        with self.ldom_collector_run_time.time():
+            ldoms = GaugeMetricFamily("solaris_exporter_ldoms",
+                                        'ldoms counters',
+                                        labels=['ldom', 'statistic', 'host'])
+            output, task_return_code, task_timeouted = run_shell_command('/usr/sbin/ldm list -p', self.max_time_to_run)
+            if task_return_code == 0 and task_timeouted is False:
+                lines = output.splitlines()
+                for line in lines:
+                    keyvalue = line.split("|")
+                    if keyvalue[0].startswith('VERSION '):
+                        ldm_version=keyvalue[0].split(" ")[1].split(".")
+                        # TODO: compatible version check here, tested for VERSION 1.21
+                        # if float(ldm_version[0]) != 1 and float(ldm_version[1]) != 21:
+                        #     print("Version " + ldm_version[0] + "." + ldm_version[1] + " is not tested with 'ldm list'")
+                        #     self.ldom_collector_errors.inc()
+                        #     break 
+                        continue
+                    if keyvalue[0] == "DOMAIN":
+                        #DOMAIN|name=dom50|state=active|flags=-n----|cons=5001|ncpu=88|mem=182536110080|util=5.7|uptime=17930944|norm_util=5.7
+                        ldom_name = keyvalue[1].split("=")[1]
+
+                        ldom_state = keyvalue[2].split("=")[1]
+                        if ldom_state == "active":
+                            ldom_state = 0
+                        elif ldom_state == "bound":
+                            ldom_state = 1
+                        elif ldom_state == "inactive":
+                            ldom_state = 2
+                        else:
+                            ldom_state = 3
+
+                        #ldom flags is coded flag-state of domain, see comments
+                        ldom_flags = 0
+                        ldom_flags_all = keyvalue[3].split("=")[1]
+
+                        #should be not less then 4 - number of flag variants per position
+                        ldom_flags_code_base = 10
+
+                        #Column 1 - Starting or stopping domains: 
+                        #               s starting or stopping
+                        if ldom_flags_all[0] == 's':
+                            ldom_flags = ldom_flags + 1
+                        ldom_flags = ldom_flags * ldom_flags_code_base
+
+                        #Column 2 - Domain status: 
+                        #           n normal
+                        #           t transition
+                        #           d  degraded  domain  that  cannot  be started due to missing resources
+                        if ldom_flags_all[1] == 'n':
+                            ldom_flags = ldom_flags + 1
+                        elif ldom_flags_all[1] == 't':
+                            ldom_flags = ldom_flags + 2
+                        elif ldom_flags_all[1] == 'd':
+                            ldom_flags = ldom_flags + 3
+                        ldom_flags = ldom_flags * ldom_flags_code_base
+
+                        # Column 3 - Reconfiguration status:
+                        #           d delayed reconfiguration
+                        #           r memory dynamic reconfiguration
+                        if ldom_flags_all[2] == 'd':
+                            ldom_flags = ldom_flags + 1
+                        elif ldom_flags_all[2] == 'r':
+                            ldom_flags = ldom_flags + 2
+                        ldom_flags = ldom_flags * ldom_flags_code_base
+
+                        # Column 4 - Control domain
+                        #           c control domain
+                        if ldom_flags_all[3] == 'c':
+                            ldom_flags = ldom_flags + 1
+                        ldom_flags = ldom_flags * ldom_flags_code_base
+
+                        # Column 5 - Service domain
+                        #           v virtual I/O service domain
+                        if ldom_flags_all[4] == 'v':
+                            ldom_flags = ldom_flags + 1
+                        ldom_flags = ldom_flags * ldom_flags_code_base
+
+                        # Column 6 - Migration status
+                        #           s source domain in a migration
+                        #           t target domain in a migration
+                        #           e error occurred during a migration
+                        if ldom_flags_all[5] == 's':
+                            ldom_flags = ldom_flags + 1
+                        elif ldom_flags_all[5] == 't':
+                            ldom_flags = ldom_flags + 2
+                        elif ldom_flags_all[5] == 'e':
+                            ldom_flags = ldom_flags + 3
+                            
+                        ldom_cons = keyvalue[4].split("=")[1]
+                        if ldom_cons == "UART":
+                            ldom_cons = -1
+                        elif ldom_cons == "":
+                            ldom_cons = 0
+
+                        ldom_ncpu = keyvalue[5].split("=")[1]
+                        if ldom_ncpu == "":
+                            ldom_ncpu = 0
+                        ldom_mem = keyvalue[6].split("=")[1]
+                        if ldom_mem == "":
+                            ldom_mem = 0
+                        ldom_util = keyvalue[7].split("=")[1]
+                        if ldom_util == "":
+                            ldom_util = "-1"
+                        ldom_uptime = keyvalue[8].split("=")[1]
+                        if ldom_uptime == "":
+                            ldom_uptime = "-1"
+                        ldom_norm_util = keyvalue[9].split("=")[1]
+                        if ldom_norm_util == "":
+                            ldom_norm_util = "-1"
+                        
+                        #print("ldom " + ldom_name + " uptime '" + ldom_uptime + "'")
+                        ldoms.add_metric([ldom_name, "ncpu", host_name], float(ldom_ncpu))
+                        ldoms.add_metric([ldom_name, "mem",  host_name], float(ldom_mem))
+                        ldoms.add_metric([ldom_name, "util", host_name], float(ldom_util))
+                        ldoms.add_metric([ldom_name, "uptime_seconds", host_name], float(ldom_uptime))
+                        ldoms.add_metric([ldom_name, "norm_util", host_name], float(ldom_norm_util))
+                        ldoms.add_metric([ldom_name, "state", host_name], float(ldom_state))
+                        ldoms.add_metric([ldom_name, "flags", host_name], float(ldom_flags))
+                        ldoms.add_metric([ldom_name, "console_port", host_name], float(ldom_cons))
+
+            else:
+                self.ldom_collector_errors.inc()
+                if task_timeouted:
+                    self.ldom_collector_timeouts.inc()
+        yield ldoms
+
+
 
 try:
     # Python 2.7
@@ -1095,8 +1234,6 @@ def start_http_server(port, addr='', registry=REGISTRY):
     t.daemon = True
     t.start()
 
-
-# end of replace start_http_server()
 
 
 if __name__ == '__main__':
@@ -1130,6 +1267,12 @@ if __name__ == '__main__':
             zone = zone[1]
             if zone != "global":
                 nzones += 1
+
+    ldoms, rc, timeouted = run_shell_command('/usr/sbin/ldm list -p', 3)
+    if ldoms != "":
+        collectors.extend([ 
+            LdomsLsCollector(),
+        ])
 
     zonename, rc, timeouted = run_shell_command('/usr/bin/zonename', 3)
     zonename = zonename.strip()

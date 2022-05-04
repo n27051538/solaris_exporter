@@ -3,19 +3,19 @@ user=monitor
 profile_name=Prometheus
 
 uid0_commands="
-/usr/sbin/fcinfo
 /usr/sbin/fmadm
 /usr/sbin/nvmeadm
 /usr/sbin/raidctl
 /usr/sbin/zlogin
 "
-# Also add priv 'file_dac_search': df -h will be able to view zone filesystems
+# Also add priv 'file_dac_search': 'df -h' will be able to view zone filesystems
+# Also add auth 'solaris.ldoms.read': 'ldm list' will be able to view domain info
 
 current_profiles=$(profiles ${user} | egrep -v "^${user}:$|^All$|^Basic Solaris User$|^${profile_name}$")
 current_profiles=$(echo -n "${current_profiles}" | tr '\n' ',')
 
 function RemoveRole {
-       usermod  -K "defaultpriv-=file_dac_search" ${user}  2>/dev/null
+       usermod  -K "defaultpriv-=file_dac_search,sys_config" -A "-solaris.ldoms.read" ${user}  2>/dev/null
        usermod  -K "defaultpriv+=basic" ${user}  2>/dev/null
 
        for uid0_command in ${uid0_commands}; do
@@ -70,7 +70,7 @@ function InstallRole {
        fi
 
        usermod -P "${current_profiles}" ${user} 2>/dev/null
-       usermod  -K "defaultpriv+=basic,file_dac_search" ${user} 2>/dev/null
+       usermod  -K "defaultpriv+=basic,file_dac_search,sys_config" -A "+solaris.ldoms.read" ${user} 2>/dev/null
        echo "Current profiles of ${user} user is: ${current_profiles}"
 }
 

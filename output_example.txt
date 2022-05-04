@@ -597,3 +597,44 @@ solaris_exporter_per_zone_caps_processing 0.21715593338012695
 solaris_exporter_fc_paths_timeouts_total 0.0
 # TYPE solaris_exporter_fc_paths_timeouts_created gauge
 solaris_exporter_fc_paths_timeouts_created 1.586252434625353e+09
+# HELP solaris_exporter_ldoms ldoms counters
+# TYPE solaris_exporter_ldoms gauge
+solaris_exporter_ldoms{host="host01",ldom="primary",statistic="ncpu"} 32.0
+solaris_exporter_ldoms{host="host01",ldom="primary",statistic="mem"} 3.4359738368e+010
+solaris_exporter_ldoms{host="host01",ldom="primary",statistic="util"} 0.5
+solaris_exporter_ldoms{host="host01",ldom="primary",statistic="uptime_seconds"} 659559.0
+solaris_exporter_ldoms{host="host01",ldom="primary",statistic="norm_util"} 0.4
+solaris_exporter_ldoms{host="host01",ldom="primary",statistic="state"} 0.0
+solaris_exporter_ldoms{host="host01",ldom="primary",statistic="flags"} 10110.0
+solaris_exporter_ldoms{host="host01",ldom="primary",statistic="console_port"} -1.0
+solaris_exporter_ldoms{host="host01",ldom="dom02",statistic="ncpu"} 48.0
+solaris_exporter_ldoms{host="host01",ldom="dom02",statistic="mem"} 2.147483648e+011
+solaris_exporter_ldoms{host="host01",ldom="dom02",statistic="util"} 0.7
+solaris_exporter_ldoms{host="host01",ldom="dom02",statistic="uptime_seconds"} 659576.0
+solaris_exporter_ldoms{host="host01",ldom="dom02",statistic="norm_util"} 0.6
+solaris_exporter_ldoms{host="host01",ldom="dom02",statistic="state"} 0.0
+solaris_exporter_ldoms{host="host01",ldom="dom02",statistic="flags"} 10000.0
+solaris_exporter_ldoms{host="host01",ldom="dom02",statistic="console_port"} 5002.0
+solaris_exporter_ldoms{host="host01",ldom="dom01",statistic="ncpu"} 48.0
+solaris_exporter_ldoms{host="host01",ldom="dom01",statistic="mem"} 2.147483648e+011
+solaris_exporter_ldoms{host="host01",ldom="dom01",statistic="util"} -1.0
+solaris_exporter_ldoms{host="host01",ldom="dom01",statistic="uptime_seconds"} -1.0
+solaris_exporter_ldoms{host="host01",ldom="dom01",statistic="norm_util"} -1.0
+solaris_exporter_ldoms{host="host01",ldom="dom01",statistic="state"} 2.0
+solaris_exporter_ldoms{host="host01",ldom="dom01",statistic="flags"} 0.0
+solaris_exporter_ldoms{host="host01",ldom="dom01",statistic="console_port"} 0.0
+# HELP solaris_exporter_ldom_collector_timeouts_total Number of times when ldom collector ran more than 3 seconds
+# TYPE solaris_exporter_ldom_collector_timeouts_total counter
+solaris_exporter_ldom_collector_timeouts_total 0.0
+# HELP solaris_exporter_ldom_collector_timeouts_created Number of times when ldom collector ran more than 3 seconds
+# TYPE solaris_exporter_ldom_collector_timeouts_created gauge
+solaris_exporter_ldom_collector_timeouts_created 1.651672718173066e+09
+# HELP solaris_exporter_ldom_collector_errors_total Number of times when ldom collector ran with errors
+# TYPE solaris_exporter_ldom_collector_errors_total counter
+solaris_exporter_ldom_collector_errors_total 0.0
+# HELP solaris_exporter_ldom_collector_errors_created Number of times when ldom collector ran with errors
+# TYPE solaris_exporter_ldom_collector_errors_created gauge
+solaris_exporter_ldom_collector_errors_created 1.651672718173104e+09
+# HELP solaris_exporter_ldom_collector_processing Time spent processing request
+# TYPE solaris_exporter_ldom_collector_processing gauge
+solaris_exporter_ldom_collector_processing 0.10866618156433105
