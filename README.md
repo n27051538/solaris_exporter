@@ -37,6 +37,7 @@ Also work on x86 platform, community-tested with Openindiana (x86) (OI-hipster-m
   - prtdiag -v return code(PrtdiagCollector)
   - Solaris Volume Manager disk status (MetaStatCollector, MetaDBCollector).
   - Get info from text files *.prom in folder provided by text_file_path var (TextFileCollector).
+  - LDOM info via 'ldm list' (LdomsLsCollector), requires auth 'solaris.ldoms.read'.
 
 ## Grafana dashboard.
 Dashboard config is located in file grafana-dashboard-solaris.json  
