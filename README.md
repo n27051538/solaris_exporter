@@ -74,7 +74,9 @@ To use this exporter you need Python2.7 or Python3.x and its modules prometheus_
         /opt/csw/bin/pkgutil -y -i gcc5core  
     # Install Python module prometheus_client  
         # Python 2.7  
-            /opt/csw/bin/pip2.7 install prometheus_client  
+            /opt/csw/bin/pip2.7 install prometheus_client==0.7.1
+            # Note than current versions of prometheus_client (0.14.1 +) for some reasons not works with Python 2.7, 
+            # that is why I fixed its version to 0.7.1, it is tested.                      
         # or Python 3.3  
             /opt/csw/bin/pip3.3 install prometheus_client  
     # Install Python module psutil, it have to compile some libs, but we preinstalled all that needed  
@@ -99,7 +101,9 @@ To use this exporter you need Python2.7 or Python3.x and its modules prometheus_
         export http_proxy=http://proxy.example.com:3128  
         export https_proxy=http://proxy.example.com:3128  
     # Install Python 2.7 module prometheus_client  
-        pip-2.7 install prometheus_client  
+        pip-2.7 install prometheus_client==0.7.1
+        # Note than current versions of prometheus_client (0.14.1 +) for some reasons not works with Python 2.7, 
+        # that is why I fixed its version to 0.7.1, it is tested.  
     # Install Python 2.7 module psutil, it have to compile some libs  
     # Also you could get psutil for Python 2.7 via 'pkg install library/python/psutil-27',  
     # but it returns wrong Network statistics, tested from Solaris 11.4.4 repo.  
@@ -120,6 +124,8 @@ To use this exporter you need Python2.7 or Python3.x and its modules prometheus_
             export https_proxy=http://proxy.example.com:3128  
     # Install Python 3.7 module prometheus_client  
             pip-3.7 install prometheus_client  
+            # tested with version 0.13.1, to install this version you may run
+            # pip-3.7 install prometheus_client==0.13.1
     # Install Python 3.7 module psutil  
     # Also you could get psutil for Python 3.7 via 'pkg install library/python/psutil-37',  
     # but its old version '5.6.7' not adapted for Sol11.4.41 changes, fails at 'swap -l' output, have network dev inaccuracy. 

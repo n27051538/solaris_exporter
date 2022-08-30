@@ -64,7 +64,7 @@ Installation. To use this exporter you need python2.7 or python3.x and its modul
             /opt/csw/bin/pkgutil -y -i gcc5core
         # Install Python module prometheus_client
             # Python 2.7
-                /opt/csw/bin/pip2.7 install prometheus_client
+                /opt/csw/bin/pip2.7 install prometheus_client==0.7.1
             # or Python 3.3
                 /opt/csw/bin/pip3.3 install prometheus_client
         # Install Python module psutil, it have to compile some libs, but we preinstalled all that needed
@@ -89,7 +89,7 @@ Installation. To use this exporter you need python2.7 or python3.x and its modul
             export http_proxy=http://proxy.example.com:3128
             export https_proxy=http://proxy.example.com:3128
         # Install Python 2.7 module prometheus_client
-            pip-2.7 install prometheus_client
+            pip-2.7 install prometheus_client==0.7.1
         # Install Python 2.7 module psutil, it have to compile some libs
         # Also you could get psutil for Python 2.7 via 'pkg install library/python/psutil-27',
         # but it returns wrong Network statistics, tested from Solaris 11.4.4 repo.
@@ -109,7 +109,7 @@ Installation. To use this exporter you need python2.7 or python3.x and its modul
             export http_proxy=http://proxy.example.com:3128
             export https_proxy=http://proxy.example.com:3128
         # Install Python 3.7 module prometheus_client
-            pip-3.7 install prometheus_client
+            pip-3.7 install prometheus_client==0.13.1
         # Install Python 3.7 module psutil
         # Also you could get psutil for Python 3.7 via 'pkg install library/python/psutil-37',
         # but its old version '5.6.7' not adapted for Sol11.4.41 changes, fails at 'swap -l' output, have network dev inaccuracy.
