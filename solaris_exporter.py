@@ -477,7 +477,7 @@ class CpuTimeCollector(object):
             worker_stat_cpu_time.add_metric([host_name, 'user'], cpuinfo.user)
             worker_stat_cpu_time.add_metric([host_name, 'system'], cpuinfo.system)
             worker_stat_cpu_time.add_metric([host_name, 'idle'], cpuinfo.idle)
-            worker_stat_cpu_time.add_metric([host_name, 'oiwait'], cpuinfo.iowait)
+            worker_stat_cpu_time.add_metric([host_name, 'iowait'], cpuinfo.iowait)
         yield worker_stat_cpu_time
 
 

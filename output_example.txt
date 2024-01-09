@@ -72,7 +72,7 @@ solaris_exporter_diskio_usage_timeouts_created 1.586252434624606e+09
 solaris_exporter_cpu_time_total{host="sparc1.local",statistic="user"} 8.321365424e+09
 solaris_exporter_cpu_time_total{host="sparc1.local",statistic="system"} 1.4103066824e+010
 solaris_exporter_cpu_time_total{host="sparc1.local",statistic="idle"} 5.53386188288e+011
-solaris_exporter_cpu_time_total{host="sparc1.local",statistic="oiwait"} 0.0
+solaris_exporter_cpu_time_total{host="sparc1.local",statistic="iowait"} 0.0
 # HELP solaris_exporter_diskio_usage_errors_total Number of times when collector ran with errors
 # TYPE solaris_exporter_diskio_usage_errors_total counter
 solaris_exporter_diskio_usage_errors_total 0.0
