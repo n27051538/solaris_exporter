@@ -1,7 +1,7 @@
 #!/usr/bin/python
 """
 solaris_exporter.py
-version v2022May04
+version v2025Jan16
     2020 Jan 31. Initial
     2020 Feb 04. Added UpTime in UpTimeCollector.
     2020 Feb 09. Added DiskErrorCollector, ZpoolCollector, FmadmCollector, SVCSCollector, FCinfoCollector
@@ -12,6 +12,8 @@ version v2022May04
     2022 Feb 04. Documentation update for support of Solaris 11.4.41.
     2022 Feb 05. Fixed support of Python 2.7 for Solaris 11.4.41 (https://github.com/n27051538/solaris_exporter/issues/7).
     2022 May 04. Added LdomsLsCollector (https://github.com/n27051538/solaris_exporter/discussions/11) .
+    2025 Jan 16. Added InventoryCPUCollector, InventoryMemCollector, InventoryOSinfoCollector
+                  - all for inventory requests in prometheus
 
 Written by Alexander Golikov for collecting SPARC Solaris metrics for Prometheus.
 
@@ -35,6 +37,7 @@ This exporter provides info about:
   - Zpool devices health via 'zpool status' command (ZpoolCollector)
   - Solaris Volume Manager disk status (MetaStatCollector, MetaDBCollector).
   - Get info from text files *.prom in folder provided by text_file_path var (TextFileCollector).
+  - Inventory infirmation (InventoryCPUCollector, InventoryMemCollector, InventoryOSinfoCollector, DiskSpaceCollector)
 
 Installation. To use this exporter you need python2.7 or python3.x and its modules prometheus_client, psutil.
 
@@ -64,7 +67,7 @@ Installation. To use this exporter you need python2.7 or python3.x and its modul
             /opt/csw/bin/pkgutil -y -i gcc5core
         # Install Python module prometheus_client
             # Python 2.7
-                /opt/csw/bin/pip2.7 install prometheus_client==0.7.1
+                /opt/csw/bin/pip2.7 install prometheus_client
             # or Python 3.3
                 /opt/csw/bin/pip3.3 install prometheus_client
         # Install Python module psutil, it have to compile some libs, but we preinstalled all that needed
@@ -89,7 +92,7 @@ Installation. To use this exporter you need python2.7 or python3.x and its modul
             export http_proxy=http://proxy.example.com:3128
             export https_proxy=http://proxy.example.com:3128
         # Install Python 2.7 module prometheus_client
-            pip-2.7 install prometheus_client==0.7.1
+            pip-2.7 install prometheus_client
         # Install Python 2.7 module psutil, it have to compile some libs
         # Also you could get psutil for Python 2.7 via 'pkg install library/python/psutil-27',
         # but it returns wrong Network statistics, tested from Solaris 11.4.4 repo.
@@ -109,7 +112,7 @@ Installation. To use this exporter you need python2.7 or python3.x and its modul
             export http_proxy=http://proxy.example.com:3128
             export https_proxy=http://proxy.example.com:3128
         # Install Python 3.7 module prometheus_client
-            pip-3.7 install prometheus_client==0.13.1
+            pip-3.7 install prometheus_client
         # Install Python 3.7 module psutil
         # Also you could get psutil for Python 3.7 via 'pkg install library/python/psutil-37',
         # but its old version '5.6.7' not adapted for Sol11.4.41 changes, fails at 'swap -l' output, have network dev inaccuracy.
@@ -234,7 +237,7 @@ def run_shell_command(commandline, timeout):
 def get_disk_dictionary():
     """
     function returns dict in format:
-    {kernel_disk_name: [admin_disk_name, disk_description]}
+    {kernel_disk_name: [admin_disk_name, disk_description, disk_size]}
 
     emulates this commands:
     # /usr/bin/iostat -E | grep Soft | awk '{ print $1}' > /tmp/a;
@@ -256,6 +259,7 @@ def get_disk_dictionary():
 
         iostatEn_lines = iostatEn.splitlines()
         admin_disk_name = []
+        disk_size = []
         j = 0
         for iostatEn_line in iostatEn_lines:
             if "Soft" in iostatEn_line:
@@ -265,7 +269,12 @@ def get_disk_dictionary():
                 one_disk_desc = re.sub(r'Vendor: (.*[^ ]) *Product: (.*[^ ]) *(Revision|Size).*', r'\1 \2',
                                        iostatEn_line)
                 one_disk_desc = re.sub(r' +', ' ', one_disk_desc)  # replace double spaces by one space
-                disk_dictionary.update({kernel_disk_name[j]: [admin_disk_name[j], one_disk_desc]})
+                # disk_dictionary.update({kernel_disk_name[j]: [admin_disk_name[j], one_disk_desc, disk_size[j]]})
+                # j += 1
+            elif "Size" in iostatEn_line:
+                size = re.sub(r'Size: .*<(.*[^ ]) bytes>.*', r'\1', iostatEn_line)
+                disk_size.append(size)
+                disk_dictionary.update({kernel_disk_name[j]: [admin_disk_name[j], one_disk_desc, disk_size[j]]})
                 j += 1
     return (disk_dictionary)
 
@@ -498,11 +507,11 @@ class MemCollector(object):
             worker_stat_mem.add_metric([host_name, 'virtual', 'total'], ram.total)
             worker_stat_mem.add_metric([host_name, 'virtual', 'free'], ram.free)
 
-            #try:
+            # try:
             #    swap = psutil.swap_memory()
-            #except ValueError:
-                # print('old version of psutil module, skipping swap stat, you need to update it to 5.9.0+ and run '
-                #       'Python3.7')
+            # except ValueError:
+            # print('old version of psutil module, skipping swap stat, you need to update it to 5.9.0+ and run '
+            #       'Python3.7')
             # see https://github.com/n27051538/solaris_exporter/issues/7
             swap = psutil_local_swap_memory()
 
@@ -511,7 +520,6 @@ class MemCollector(object):
             worker_stat_mem.add_metric([host_name, 'swap', 'free'], swap.free)
             worker_stat_mem.add_metric([host_name, 'swap', 'sin'], swap.sin)
             worker_stat_mem.add_metric([host_name, 'swap', 'sout'], swap.sout)
-
 
         yield worker_stat_mem
 
@@ -590,6 +598,7 @@ class DiskSpaceCollector(object):
     Disk space stats
     Note that UFS inode info is NOT collected.
     """
+    max_time_to_run = 4
     disk_space_collector_run_time = Gauge('solaris_exporter_diskspace_worker', 'Time spent processing request')
 
     def collect(self):
@@ -600,6 +609,8 @@ class DiskSpaceCollector(object):
 
             # disk_partitions = my_disk_partitions(all=False)   # rewritten due to bug: https://github.com/giampaolo/psutil/issues/1674
             disk_partitions = cext.disk_partitions()
+            ufs_total = 0
+            zfs_total = 0
             for partition in disk_partitions:
                 device, mountpoint, fstype, opts = partition
                 if fstype not in ['zfs', 'ufs']:
@@ -610,11 +621,54 @@ class DiskSpaceCollector(object):
                     spaceinfo = psutil.disk_usage(mountpoint)
                 except OSError:
                     continue
+
+                if fstype == 'ufs':
+                    ufs_total = ufs_total + spaceinfo.total
+
                 worker_stat_space.add_metric([host_name, 'used', mountpoint, device, fstype], spaceinfo.used)
                 worker_stat_space.add_metric([host_name, 'total', mountpoint, device, fstype], spaceinfo.total)
                 worker_stat_space.add_metric([host_name, 'free', mountpoint, device, fstype], spaceinfo.free)
                 worker_stat_space.add_metric([host_name, 'percent', mountpoint, device, fstype], spaceinfo.percent)
         yield worker_stat_space
+
+        # zfs info from ps_util is wrong when getting quota in solaris zone, get if from 'df -k /'
+        zfs_total = 0
+        output, task_return_code, task_timeouted = run_shell_command('df -kFzfs /', self.max_time_to_run)
+        if task_return_code == 0 and task_timeouted is False:
+            lines = output.splitlines()
+            try:
+                line = lines[1] + lines[2]
+            except IndexError:
+                try:
+                    line = lines[1]
+                except IndexError:
+                    line = ""
+            zfs_root_string = line.split()
+            try:
+                zfs_total = float(zfs_root_string[1]) * 1024
+            except IndexError, ValueError:
+                zfs_total = 0
+
+        inventory_space_family = GaugeMetricFamily('solaris_exporter_inventory_diskspace_gb', 'diskspace inventory',
+                                                   labels=['host'])
+
+        if zonename != "global":
+            # use for non-global zones
+            inventory_space = ufs_total + zfs_total
+        else:
+            # use for global zones information from iostat -En
+            inventory_space = 0
+            for key in disk_dictionary:
+                try:
+                    value = float(disk_dictionary[key][2])
+                except IndexError, ValueError:
+                    value = 0
+                inventory_space = inventory_space + value
+            if inventory_space == 0:
+                inventory_space = ufs_total + zfs_total
+        inventory_space = round(inventory_space / 1024 / 1024 / 1024, 1)
+        inventory_space_family.add_metric([host_name], inventory_space)
+        yield inventory_space_family
 
 
 class CurTimeCollector(object):
@@ -627,6 +681,170 @@ class CurTimeCollector(object):
                                                      labels=[])
         cur_time_metric_family.add_metric([], time.time())
         yield cur_time_metric_family
+
+
+class InventoryCPUCollector(object):
+    """
+    'inventory' cpu checker
+    """
+    # timeout how match seconds is allowed to collect data
+    max_time_to_run = 4
+    inventory_cpu_collector_run_time = Gauge('solaris_exporter_inventory_vcpu_processing',
+                                             'Time spent processing request')
+
+    def collect(self):
+        with self.inventory_cpu_collector_run_time.time():
+            output, task_return_code, task_timeouted = run_shell_command('/usr/sbin/psrinfo',
+                                                                         self.max_time_to_run)
+            if task_return_code == 0 and task_timeouted is False:
+                lines = output.splitlines()
+                inventory_cpu_family = GaugeMetricFamily("solaris_exporter_inventory_vcpu",
+                                                         'vcpu inventory information',
+                                                         labels=['host'])
+                cpus = 0
+                for line in lines:
+                    line = line.strip()
+                    if any(s in line for s in ['on-line']):
+                        cpus += 1
+                inventory_cpu_family.add_metric([host_name], float(cpus))
+                yield inventory_cpu_family
+
+
+class InventoryMemCollector(object):
+    """
+    'inventory' mem checker
+    """
+    # timeout how match seconds is allowed to collect data
+    max_time_to_run = 4
+    inventory_mem_collector_run_time = Gauge('solaris_exporter_inventory_memory_processing',
+                                             'Time spent processing request')
+
+    def collect(self):
+        with self.inventory_mem_collector_run_time.time():
+
+            inventory_mem_family = GaugeMetricFamily("solaris_exporter_inventory_memory_gb",
+                                                     'mem inventory information',
+                                                     labels=['host'])
+
+            output, task_return_code, task_timeouted = run_shell_command(
+                "/usr/bin/prctl -n zone.max-swap -t privileged -P " + str(os.getpid()),
+                self.max_time_to_run)
+            swap = 0
+            if task_return_code == 0 and task_timeouted is False:
+                lines = output.splitlines()
+                for line in lines:
+                    line = line.strip()
+                    if any(s in line for s in ['privileged']):
+                        memkeyvalue = line.split(" ")
+                        try:
+                            swap = memkeyvalue[2]
+                            swap = round(float(swap) / 1024 / 1024 / 1024, 1)
+                        except IndexError, ValueError:
+                            swap = 0
+
+            mem = 0
+            output, task_return_code, task_timeouted = run_shell_command("/usr/sbin/prtconf",
+                                                                         self.max_time_to_run)
+            if task_return_code == 0 and task_timeouted is False:
+                lines = output.splitlines()
+                for line in lines:
+                    line = line.strip()
+                    if any(s in line for s in ['Megabytes']):
+                        memkeyvalue = line.split(" ")
+                        try:
+                            mem = memkeyvalue[2]
+                            mem = round(float(mem) / 1024, 1)
+                        except IndexError, ValueError:
+                            mem = 0
+            else:
+                self.inventory_mem_collector_errors.inc()
+                if task_timeouted:
+                    self.inventory_mem_collector_timeouts.inc()
+
+            if swap == 0 or mem < swap:
+                inventory_mem = mem
+            else:
+                inventory_mem = swap
+
+            inventory_mem_family.add_metric([host_name], inventory_mem)
+            yield inventory_mem_family
+
+
+class InventoryOSinfoCollector(object):
+    """
+    Read OS info
+    """
+    InventoryOSinfoCollector_run_time = Gauge('solaris_exporter_inventory_osinfo_processing',
+                                              'Time spent processing request')
+    # timeout how match seconds is allowed to collect data
+    max_time_to_run = 4
+
+    def collect(self):
+        with self.InventoryOSinfoCollector_run_time.time():
+            pretty_name = "Solaris"
+            uname_v = 'unknown'
+            model = 'unknown'
+            virttype = 'none'
+            vmname = 'none'
+
+            # pretty_name
+            with open('/etc/release', 'r') as text_object:
+                output = text_object.read()
+                text_object.close
+                lines = output.splitlines()
+                pretty_name = lines[0].strip()
+
+            inventory_os = GaugeMetricFamily("solaris_exporter_inventory_osinfo", 'os inventory information',
+                                             labels=['host', 'pretty_name', 'uname_v', 'model', 'virttype', 'vmname'])
+
+            # uname_v
+            output, task_return_code, task_timeouted = run_shell_command("/usr/bin/uname -v",
+                                                                         self.max_time_to_run)
+            if task_return_code == 0 and task_timeouted is False:
+                lines = output.splitlines()
+                uname_v = lines[0].strip()
+
+            # model
+            output, task_return_code, task_timeouted = run_shell_command("/usr/sbin/prtconf -b", self.max_time_to_run)
+            if task_return_code == 0 and task_timeouted is False:
+                lines = output.splitlines()
+                line = lines[0]
+                line = line.strip()
+                modelkeyvalue = line.split(":")
+                try:
+                    model = modelkeyvalue[1]
+                    model = model.strip()
+                    model = model.replace("SUNW,", "").replace("ORCL,", "")
+                except IndexError:
+                    model = 'unknown'
+
+            # virttype, vmname
+            if zonename != "global":
+                virttype = "SolarisZone"
+                vmname = zonename
+            else:
+                ldom_name = 'unknown'
+                output, task_return_code, task_timeouted = run_shell_command("/usr/sbin/virtinfo -ap",
+                                                                             self.max_time_to_run)
+                if task_return_code == 0 and task_timeouted is False:
+                    lines = output.splitlines()
+                    for line in lines:
+                        line = line.strip()
+                        if any(s in line for s in ['DOMAINNAME|name=']):
+                            ldomkeyvalue = line.split("=")
+                            try:
+                                ldom_name = ldomkeyvalue[1]
+                            except IndexError:
+                                pass
+                    if ldom_name != 'unknown' and ldom_name != 'primary':
+                        virttype = "SolarisLDOM"
+                        vmname = ldom_name
+                    elif ldom_name == 'primary':
+                        vmname = ldom_name
+                        virttype = "none"
+
+            inventory_os.add_metric([host_name, pretty_name, uname_v, model, virttype, vmname], 1)
+            yield inventory_os
 
 
 class UpTimeCollector(object):
@@ -1062,6 +1280,7 @@ class TextFileCollector(object):
                         yield family
                     text_object.close
 
+
 class LdomsLsCollector(object):
     """
     Read input from 'ldm list' command
@@ -1069,8 +1288,8 @@ class LdomsLsCollector(object):
     # timeout how match seconds is allowed to collect data
     max_time_to_run = 3
     ldom_collector_timeouts = Counter('solaris_exporter_ldom_collector_timeouts',
-                                        'Number of times when ldom collector ran' +
-                                        ' more than ' + str(max_time_to_run) + ' seconds')
+                                      'Number of times when ldom collector ran' +
+                                      ' more than ' + str(max_time_to_run) + ' seconds')
     ldom_collector_errors = Counter('solaris_exporter_ldom_collector_errors',
                                     'Number of times when ldom collector ran with errors')
     ldom_collector_run_time = Gauge('solaris_exporter_ldom_collector_processing',
@@ -1079,23 +1298,23 @@ class LdomsLsCollector(object):
     def collect(self):
         with self.ldom_collector_run_time.time():
             ldoms = GaugeMetricFamily("solaris_exporter_ldoms",
-                                        'ldoms counters',
-                                        labels=['ldom', 'statistic', 'host'])
+                                      'ldoms counters',
+                                      labels=['ldom', 'statistic', 'host'])
             output, task_return_code, task_timeouted = run_shell_command('/usr/sbin/ldm list -p', self.max_time_to_run)
             if task_return_code == 0 and task_timeouted is False:
                 lines = output.splitlines()
                 for line in lines:
                     keyvalue = line.split("|")
                     if keyvalue[0].startswith('VERSION '):
-                        ldm_version=keyvalue[0].split(" ")[1].split(".")
+                        ldm_version = keyvalue[0].split(" ")[1].split(".")
                         # TODO: compatible version check here, tested for VERSION 1.21
                         # if float(ldm_version[0]) != 1 and float(ldm_version[1]) != 21:
                         #     print("Version " + ldm_version[0] + "." + ldm_version[1] + " is not tested with 'ldm list'")
                         #     self.ldom_collector_errors.inc()
-                        #     break 
+                        #     break
                         continue
                     if keyvalue[0] == "DOMAIN":
-                        #DOMAIN|name=dom50|state=active|flags=-n----|cons=5001|ncpu=88|mem=182536110080|util=5.7|uptime=17930944|norm_util=5.7
+                        # DOMAIN|name=dom50|state=active|flags=-n----|cons=5001|ncpu=88|mem=182536110080|util=5.7|uptime=17930944|norm_util=5.7
                         ldom_name = keyvalue[1].split("=")[1]
 
                         ldom_state = keyvalue[2].split("=")[1]
@@ -1108,20 +1327,20 @@ class LdomsLsCollector(object):
                         else:
                             ldom_state = 3
 
-                        #ldom flags is coded flag-state of domain, see comments
+                        # ldom flags is coded flag-state of domain, see comments
                         ldom_flags = 0
                         ldom_flags_all = keyvalue[3].split("=")[1]
 
-                        #should be not less then 4 - number of flag variants per position
+                        # should be not less then 4 - number of flag variants per position
                         ldom_flags_code_base = 10
 
-                        #Column 1 - Starting or stopping domains: 
+                        # Column 1 - Starting or stopping domains:
                         #               s starting or stopping
                         if ldom_flags_all[0] == 's':
                             ldom_flags = ldom_flags + 1
                         ldom_flags = ldom_flags * ldom_flags_code_base
 
-                        #Column 2 - Domain status: 
+                        # Column 2 - Domain status:
                         #           n normal
                         #           t transition
                         #           d  degraded  domain  that  cannot  be started due to missing resources
@@ -1164,7 +1383,7 @@ class LdomsLsCollector(object):
                             ldom_flags = ldom_flags + 2
                         elif ldom_flags_all[5] == 'e':
                             ldom_flags = ldom_flags + 3
-                            
+
                         ldom_cons = keyvalue[4].split("=")[1]
                         if ldom_cons == "UART":
                             ldom_cons = -1
@@ -1186,10 +1405,10 @@ class LdomsLsCollector(object):
                         ldom_norm_util = keyvalue[9].split("=")[1]
                         if ldom_norm_util == "":
                             ldom_norm_util = "-1"
-                        
-                        #print("ldom " + ldom_name + " uptime '" + ldom_uptime + "'")
+
+                        # print("ldom " + ldom_name + " uptime '" + ldom_uptime + "'")
                         ldoms.add_metric([ldom_name, "ncpu", host_name], float(ldom_ncpu))
-                        ldoms.add_metric([ldom_name, "mem",  host_name], float(ldom_mem))
+                        ldoms.add_metric([ldom_name, "mem", host_name], float(ldom_mem))
                         ldoms.add_metric([ldom_name, "util", host_name], float(ldom_util))
                         ldoms.add_metric([ldom_name, "uptime_seconds", host_name], float(ldom_uptime))
                         ldoms.add_metric([ldom_name, "norm_util", host_name], float(ldom_norm_util))
@@ -1202,7 +1421,6 @@ class LdomsLsCollector(object):
                 if task_timeouted:
                     self.ldom_collector_timeouts.inc()
         yield ldoms
-
 
 
 try:
@@ -1235,7 +1453,6 @@ def start_http_server(port, addr='', registry=REGISTRY):
     t.start()
 
 
-
 if __name__ == '__main__':
     assert psutil.SUNOS, 'This program is for Solaris OS only. See installation doc in its header'
     host_name = socket.gethostname()
@@ -1249,6 +1466,9 @@ if __name__ == '__main__':
 
     # collectors enabled for all zones:
     collectors = [
+        InventoryOSinfoCollector(),
+        InventoryMemCollector(),
+        InventoryCPUCollector(),
         CurTimeCollector(),
         UpTimeCollector(),
         NetworkCollector(),
@@ -1270,7 +1490,7 @@ if __name__ == '__main__':
 
     ldoms, rc, timeouted = run_shell_command('/usr/sbin/ldm list -p', 3)
     if ldoms != "":
-        collectors.extend([ 
+        collectors.extend([
             LdomsLsCollector(),
         ])
 
