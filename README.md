@@ -17,6 +17,8 @@ Also work on x86 platform, community-tested with Openindiana (x86) (OI-hipster-m
  - 2022 Feb 04. Documentation update for support of Solaris 11.4.41.
  - 2022 Feb 05. [Fixed](https://github.com/n27051538/solaris_exporter/issues/7) support of Python 2.7 for Solaris 11.4.41.
  - 2022 May 04. Added LdomsLsCollector due to [discussion](https://github.com/n27051538/solaris_exporter/discussions/11).
+ - 2025 Jan 16. Added InventoryCPUCollector, InventoryMemCollector, InventoryOSinfoCollector
+                  - all for inventory requests in prometheus
     
     
 ## Provides info about:
@@ -38,6 +40,7 @@ Also work on x86 platform, community-tested with Openindiana (x86) (OI-hipster-m
   - Solaris Volume Manager disk status (MetaStatCollector, MetaDBCollector).
   - Get info from text files *.prom in folder provided by text_file_path var (TextFileCollector).
   - LDOM info via 'ldm list' (LdomsLsCollector), requires auth 'solaris.ldoms.read'.
+  - Inventory infirmation (InventoryCPUCollector, InventoryMemCollector, InventoryOSinfoCollector, DiskSpaceCollector)
 
 ## Grafana dashboard.
 Dashboard config is located in file grafana-dashboard-solaris.json  
